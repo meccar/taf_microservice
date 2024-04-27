@@ -22,8 +22,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install packages
+      working-directory: gateway
       run: npm ci
     - name: Build gateway
+      working-directory: gateway
       run: npm run build
     - name: Formatting, linting, tsc, and tests
       run: |
