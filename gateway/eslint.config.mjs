@@ -1,31 +1,33 @@
-import globals from "globals";
+// import globals from "globals";
 
 import path from "path";
 import { fileURLToPath } from "url";
 import { FlatCompat } from "@eslint/eslintrc";
 import pluginJs from "@eslint/js";
-
-import airbnbBaseConfig from "eslint-config-airbnb-base";
-import prettierConfig from "eslint-config-prettier";
-import nodeRecommendedConfig from "eslint-plugin-node/lib/configs/recommended.js";
+import prettierPlugin from "eslint-plugin-prettier";
 
 // mimic CommonJS variables -- not needed if using CommonJS
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
 const compat = new FlatCompat({
-  baseDirectory: __dirname,
+  baseDirectory: dirname,
   recommendedConfig: pluginJs.configs.recommended,
 });
 
 export default [
-  { files: ["**/*.js"], languageOptions: { sourceType: "commonjs" } },
-  { languageOptions: { globals: globals.browser } },
-  airbnbBaseConfig,
-  prettierConfig,
-  nodeRecommendedConfig,
+  { files: ["**/*.js"], languageOptions: { sourceType: "script" } },
   {
-    // extends: ["airbnb-base", "prettier", "plugin:node/recommended"],
-    plugins: ["prettier"],
+    languageOptions: {
+      sourceType: "module",
+      parserOptions: {
+        ecmaVersion: 2024,
+      },
+    },
+  },
+  {
+    plugins: {
+      prettier: prettierPlugin,
+    },
     rules: {
       "prettier/prettier": "warn",
       "spaced-comment": "off",
@@ -39,8 +41,10 @@ export default [
       "no-underscore-dangle": "off",
       "class-methods-use-this": "off",
       "prefer-destructuring": ["error", { object: true, array: false }],
-      "no-unused-vars": ["error", { argsIgnorePattern: "req|res|next|val" }],
+      "no-unused-vars": ["warn", { argsIgnorePattern: "req|res|next|val" }],
     },
   },
-  ...compat.extends("standard"),
+  ...compat.extends("airbnb-base"),
+  ...compat.extends("prettier"),
+  ...compat.extends("plugin:node/recommended"),
 ];
