@@ -1,4 +1,4 @@
-name: CI
+name: Gateway
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  auth:
+  gateway:
     name: Authentication service
     runs-on: ubuntu-latest
 
@@ -22,10 +22,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install packages
-      working-directory: auth
+      working-directory: gateway
       run: npm ci
     - name: Formatting, linting, tsc, and tests
-      working-directory: auth
+      working-directory: gateway
       run: |
         npm run prettier:check
         npm run lint:check
