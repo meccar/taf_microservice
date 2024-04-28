@@ -1,6 +1,6 @@
 const express = require("express");
 
-const Config = require("./config");
+const Config = require("./config/config");
 
 const app = express();
 
