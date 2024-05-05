@@ -24,7 +24,7 @@ const sendErrorDev = (err, res) => {
   });
 };
 
-module.exports = (err, res) => {
+export default (err, res) => {
   // eslint-disable-next-line no-param-reassign
   err.statusCode = err.statusCode || 500;
 
