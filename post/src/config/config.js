@@ -43,4 +43,3 @@ module.exports = class kafkaConfig {
       await this.consumer.disconnect();
     });
   }
-};
