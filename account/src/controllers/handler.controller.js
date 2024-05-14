@@ -70,13 +70,20 @@ exports.getOne = (Model, populateOptions) =>
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
     let filter = {};
-    if (req.params.postID) filter = { post: req.params.postID };
+    // if (req.params.postID) filter = { post: req.params.postID };
+    if (req.params.accountID) filter = { account : req.params.accountID }
 
     // const features = new APIFeatures(Model.find(filter), req.query)
     //   .filter()
     //   .sort()
     //   .limitFields()
     //   .paginate();
+
+    // const doc = await features.query;
+
+    if (!doc) {
+      return next(new AppError("No document found with that ID", 404));
+    }
 
     res.status(200).json({
       status: "success",
