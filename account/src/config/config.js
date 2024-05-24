@@ -10,35 +10,35 @@ module.exports = {
 };
 
 module.exports = class kafkaConfig {
-  constructor(){
+  constructor() {
     this.Kafka = new Kafka({
       clientId: "nodejs-kafka",
-      brokers: ["localhost:9093"]
-    })
+      brokers: ["localhost:9093"],
+    });
     this.producer = this.Kafka.producer();
-    this.consumer = this.Kafka.consumer({groupId: "test-group"})
+    this.consumer = this.Kafka.consumer({ groupId: "test-group" });
 
-    this.produce = catchAsync( async (topic, messages) => {
-        await this.producer.connect();
-        await this.producer.send({
-          topic: topic,
-          messages: messages,
-        });
+    this.produce = catchAsync(async (topic, messages) => {
+      await this.producer.connect();
+      await this.producer.send({
+        topic,
+        messages,
+      });
 
-        await this.producer.disconnect();
-    })
+      await this.producer.disconnect();
+    });
 
-    this.consume = catchAsync( async (topic, callback) => {
+    this.consume = catchAsync(async (topic, callback) => {
       await this.consumer.connect();
       await this.consumer.subscribe({
-        topic: topic,
+        topic,
         fromBeginning: true,
       });
       await this.consumer.run({
-        matchMessage: async ({topic, partition, message}) => {
+        matchMessage: async ({ topic, partition, message }) => {
           const value = message.value.toString();
           callback(value);
-        }
+        },
       });
       await this.consumer.disconnect();
     });
