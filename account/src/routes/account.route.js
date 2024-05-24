@@ -1,17 +1,17 @@
-const express = require("express");
+// const express = require("express");
 
-const router = express.Router();
+// const router = express.Router();
 
-const AccountController = require("../controllers/account.controller");
+// const AccountController = require("../controllers/account.controller");
 
-router
-  .route("/")
-  .get(AccountController.GetAllAccount)
+// router
+//   .route("/")
+//   .get(AccountController.GetAllAccount)
 
-router
-  .route("/:id")
-  .get(AccountController.GetAccount)
-  .patch(AccountController.UpdateAccount)
-  .delete(AccountController.DeleteAccount);
+// router
+//   .route("/:id")
+//   .get(AccountController.GetAccount)
+//   .patch(AccountController.UpdateAccount)
+//   .delete(AccountController.DeleteAccount);
 
-module.exports = router;
+// module.exports = router;
