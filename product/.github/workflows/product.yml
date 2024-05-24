@@ -1,4 +1,4 @@
-name: community CI/CD
+name: product CI/CD
 
 on:
   push:
