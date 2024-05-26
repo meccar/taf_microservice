@@ -9,14 +9,8 @@ dotenv.config({ path: configFile });
 module.exports = {
   PORT: process.env.PORT,
   DB_URL: process.env.DB_URL,
-  key: fs.readFileSync(
-    path.join(__dirname, "../..", "key.pem"),
-    "utf8",
-  ),
-  cert: fs.readFileSync(
-    path.join(__dirname, "../..", "cert.pem"),
-    "utf8",
-  ),
+  key: fs.readFileSync(path.join(__dirname, "../..", "key.pem"), "utf8"),
+  cert: fs.readFileSync(path.join(__dirname, "../..", "cert.pem"), "utf8"),
 };
 
 // module.exports = class kafkaConfig {
