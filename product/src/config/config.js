@@ -1,11 +1,22 @@
 const dotenv = require("dotenv");
+const fs = require("fs");
+const path = require("path");
 
 const env = process.env.NODE_ENV || "development";
 const configFile = `./.env.${env}`;
 dotenv.config({ path: configFile });
+
 module.exports = {
   PORT: process.env.PORT,
   DB_URL: process.env.DB_URL,
+  key: fs.readFileSync(
+    path.join(__dirname, "../..", "key.pem"),
+    "utf8",
+  ),
+  cert: fs.readFileSync(
+    path.join(__dirname, "../..", "cert.pem"),
+    "utf8",
+  ),
 };
 
 // module.exports = class kafkaConfig {
