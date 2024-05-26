@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "format:check": "prettier --check .",
+    "format:check": "prettier --check . --max-warnings=0",
     "format:write": "prettier --write .",
     "lint:check": "eslint .",
-    "lint:fix": "eslint --fix .",
+    "lint:fix": "eslint --fix . --max-warnings=0",
     "start": "NODE_ENV=production nodemon src/index.js",
     "dev": "nodemon src/index.js"
   },
