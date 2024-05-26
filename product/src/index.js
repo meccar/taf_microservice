@@ -16,9 +16,9 @@ https
       key: Config.key,
       cert: Config.cert,
     },
-    app,
+    app
   )
   .listen(Config.PORT, () => {
     // eslint-disable-next-line no-console
-    console.log(`Server is listening on port ${Config.PORT}`);
+    console.log(`Server is listening on ${Config.PORT}`);
   });
