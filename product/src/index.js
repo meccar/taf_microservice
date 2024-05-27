@@ -2,13 +2,13 @@ const express = require("express");
 const https = require("https");
 
 const Config = require("./config/config");
-// const productRoute = require("./routes/product.route");
+const productRoute = require("./routes/product.route");
 
 const app = express();
 
 app.use(express.json());
 
-// app.use("/api/v1/product", productRoute);
+app.use("/api/v1/product", productRoute);
 
 https
   .createServer(
