@@ -9,6 +9,8 @@ dotenv.config({ path: configFile });
 module.exports = {
   PORT: process.env.PORT,
   DB_URL: process.env.DB_URL,
+  CLIENT_ID: process.env.CLIENT_ID,
+  CLIENT_SECRET: process.env.CLIENT_SECRET,
   key: fs.readFileSync(path.join(__dirname, "../..", "key.pem"), "utf8"),
   cert: fs.readFileSync(path.join(__dirname, "../..", "cert.pem"), "utf8"),
 };
