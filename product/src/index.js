@@ -2,32 +2,31 @@ const express = require("express");
 const https = require("https");
 const helmet = require("helmet");
 const passport = require("passport");
-const {Strategy} = require("passport-google-oauth20")
+// const { Strategy } = require("passport-google-oauth20");
 
 const Config = require("./config/config");
 const productRoute = require("./routes/product.route");
 
-const AUTH_OPTIONS = {
-  callbackURL: "/auth/google/callback",
-  clientID: Config.CLIENT_ID,
-  clientSecret: Config.CLIENT_SECRET,
-}
+// const AUTH_OPTIONS = {
+//   callbackURL: "/auth/google/callback",
+//   clientID: Config.CLIENT_ID,
+//   clientSecret: Config.CLIENT_SECRET,
+// };
 
-function verifyCallback(accessToken, refreshToken, profile, done) {
-  console.log("Google profile", profile);
-  done(null, profile)
-}
+// function verifyCallback(accessToken, refreshToken, profile, done) {
+//   console.log("Google profile", profile);
+//   done(null, profile);
+// }
 
-passport.use(new Strategy(AUTH_OPTIONS, verifyCallback) )
+// passport.use(new Strategy(AUTH_OPTIONS, verifyCallback));
 
 const app = express();
 
 app.use(helmet());
 
-app.use(passport.iniitialize())
+app.use(passport.iniitialize());
 
 app.use(express.json());
-
 
 app.use("/api/v1/product", productRoute);
 

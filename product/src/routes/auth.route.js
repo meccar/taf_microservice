@@ -1,17 +1,24 @@
-const passport = require("passport")
+const express = require("express");
 
-app.get("auth/google", passport.authenticate("google", { 
+const router = express.Router({ mergeParams: true });
+const passport = require("passport");
+
+router.get(
+  "auth/google",
+  passport.authenticate("google", {
     scope: ["email"],
-}));
+  }),
+);
 
-app.get("auth/google/callback", passport.authenticate("google", {
+router.get(
+  "auth/google/callback",
+  passport.authenticate("google", {
     failureRedirect: "/failure",
     successRedirect: "/",
     session: false,
-}), (req, res) => {
-    console.log("test")
-})
+  }),
+);
 
-app.get("auth/logout")
+router.get("auth/logout");
 
-app.get("/failure")
+router.get("/failure");
