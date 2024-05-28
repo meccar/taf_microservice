@@ -6,13 +6,13 @@ const {
 
 const ProductSchema = new mongoose.Schema({
   title: {
-    type: string,
+    type: String,
   },
   description: {
-    type: string,
+    type: String,
   },
   price: {
-    type: number,
+    type: Number,
   },
   promotion: {
     type: ObjectId,
