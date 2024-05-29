@@ -19,8 +19,8 @@ router.get(
   }),
 );
 
-router.get("auth/logout", (req, res) => {
-  passport.lo;
+router.get("auth/logout", (req) => {
+  req.logout();
 });
 
 router.get("/failure");
