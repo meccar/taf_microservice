@@ -11,6 +11,8 @@ module.exports = {
   DB_URL: process.env.DB_URL,
   CLIENT_ID: process.env.CLIENT_ID,
   CLIENT_SECRET: process.env.CLIENT_SECRET,
+  COOKIE_KEY_1: process.env.COOKIE_KEY_1,
+  COOKIE_KEY_2: process.env.COOKIE_KEY_2,
   key: fs.readFileSync(path.join(__dirname, "../..", "key.pem"), "utf8"),
   cert: fs.readFileSync(path.join(__dirname, "../..", "cert.pem"), "utf8"),
 };

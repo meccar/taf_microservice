@@ -15,4 +15,14 @@ function verifyCallback(accessToken, refreshToken, profile, done) {
 
 passport.use(new Strategy(AUTH_OPTIONS, verifyCallback));
 
+// Save the session to cookie
+passport.serializeUser((user, done) => {
+  done(null, user.id)
+})
+
+// Read the session from cookie
+passport.deserializeUser((id, done) => {
+  done(null, id)
+})
+
 module.exports = passport;
