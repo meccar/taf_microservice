@@ -3,6 +3,7 @@ const https = require("https");
 const helmet = require("helmet");
 const passport = require("passport");
 // const { Strategy } = require("passport-google-oauth20");
+const cookieSession = require("cookie-session");
 
 const Config = require("./config/config");
 const productRoute = require("./routes/product.route");
@@ -24,7 +25,16 @@ const app = express();
 
 app.use(helmet());
 
+app.use(
+  cookieSession({
+    name: "session",
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: [Config.COOKIE_KEY_1, Config.COOKIE_KEY_2],
+  }),
+);
+
 app.use(passport.iniitialize());
+app.use(passport.session());
 
 app.use(express.json());
 

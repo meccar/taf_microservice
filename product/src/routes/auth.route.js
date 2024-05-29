@@ -15,10 +15,14 @@ router.get(
   passport.authenticate("google", {
     failureRedirect: "/failure",
     successRedirect: "/",
-    session: false,
+    session: true,
   }),
 );
 
-router.get("auth/logout");
+router.get("auth/logout", (req) => {
+  req.logout();
+});
 
 router.get("/failure");
+
+module.export = router;
