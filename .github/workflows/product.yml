@@ -1,15 +1,17 @@
-name: product CI/CD
+name: Product CI/CD
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
     paths:
-      - ["product/**"]
+      - 'product/**'
 
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
     paths:
-      - ["product/**"]
+      - 'product/**'
 
 jobs:
   build:
