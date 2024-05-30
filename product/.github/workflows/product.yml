@@ -2,19 +2,15 @@ name: product CI/CD
 
 on:
   push:
-    branches: ["meccar"]
-    # paths:
-    #   - "product/**"
+    branches: [main]
   pull_request:
-    branches: ["meccar"]
-    # paths:
-    #   - "product/**"
-
+    branches: [main]
+      
 jobs:
   build:
     env:
       CI: true
-      MONGO_URL:
+      # MONGO_URL: 
 
     strategy:
       matrix:
@@ -26,27 +22,50 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
 
-      - name: Install packages
-        # working-directory: product
-        run: npm ci
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
 
-      - name: Formatting, linting, tsc, and tests
-        # working-directory: product
-        run: |
-          npm run format:check
-          npm run lint:check
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_ACCESS_TOKEN }} 
 
-      # - name: Start MongoDB
-      #   uses: supercharge/mongodb-github-action@1.11.0
-      #   with:
-      #     mongodb-version: ${{ matrix.mongodb-version }}
+    - name: Build and push Docker image
+      working-directory: product
+      timeout-minutes: 10
+      uses: docker/build-push-action@v5
+      with:
+        context: ./product
+        file: ./product/Dockerfile
+        push: true
+        tags: ${{ secrets.DOCKER_USERNAME }}/product:latest
 
-      - run: npm install
+    - name: Verify Docker image
+      working-directory: product
+      run: docker images ${{ secrets.DOCKER_USERNAME }}/product:latest
+
+    - name: Install packages
+      working-directory: product
+      run: npm ci
+
+    - name: Formatting, linting, tsc, and tests
+      working-directory: product
+      run: |
+        npm run format:check
+        npm run lint:check
+      
+    # - name: Start MongoDB
+    #   uses: supercharge/mongodb-github-action@1.11.0
+    #   with:
+    #     mongodb-version: ${{ matrix.mongodb-version }}
+
+    - run: npm install
