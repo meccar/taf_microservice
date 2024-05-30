@@ -1,0 +1,55 @@
+name: Main Workflow
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      # - 'account/**'
+      - 'product/**'
+      # - 'post/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      # - 'account/**'
+      - 'product/**'
+      # - 'post/**'
+
+jobs:
+
+  run-account-workflow:
+    name: Run Account Workflow
+    if: ${{ github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Account Workflow
+        uses: actions/checkout@v3
+      - name: Run Account Workflow
+        run: |
+          git fetch --prune --unshallow
+          gh workflow run .github/workflows/account.yml --ref ${{ github.event.pull_request.head.sha || github.sha }}
+
+  run-product-workflow:
+    name: Run Product Workflow
+    if: ${{ github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Product Workflow
+        uses: actions/checkout@v3
+      - name: Run Product Workflow
+        run: |
+          git fetch --prune --unshallow
+          gh workflow run .github/workflows/product.yml --ref ${{ github.event.pull_request.head.sha || github.sha }}
+
+  run-post-workflow:
+    name: Run Post Workflow
+    if: ${{ github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Post Workflow
+        uses: actions/checkout@v3
+      - name: Run Post Workflow
+        run: |
+          git fetch --prune --unshallow
+          gh workflow run .github/workflows/post.yml --ref ${{ github.event.pull_request.head.sha || github.sha }}
