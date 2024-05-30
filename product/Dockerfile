@@ -1,13 +1,24 @@
-FROM node
+FROM node:lts-alpine
 
-WORKDIR /app/community
+WORKDIR /app/product
 
-COPY package.json
+COPY package*.json ./
 
-RUN npm install
+# COPY . .
+
+# COPY client/package*.json client/
+# RUN npm run install-client --omit=dev
+
+COPY ./package*.json product/
+RUN npm run install-product --omit=dev
+
+# COPY client/ client/
+# RUN npm run build --prefix client
 
 COPY . .
 
-EXPOSE 3003
+USER node
 
 CMD ["npm", "start"]
+
+EXPOSE 3003
