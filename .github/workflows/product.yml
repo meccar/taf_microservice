@@ -12,7 +12,7 @@ on:
       - ["product/**"]
 
 jobs:
-  build-and-push:
+  build:
     env:
       CI: true
       # MONGO_URL: 
