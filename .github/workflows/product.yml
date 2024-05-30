@@ -4,12 +4,12 @@ on:
   push:
     branches: [ main ]
     paths:
-      - "product/**"
+      - ["product/**"]
 
   pull_request:
     branches: [ main ]
     paths:
-      - "product/**"
+      - ["product/**"]
 
 jobs:
   build-and-push:
