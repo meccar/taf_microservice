@@ -46,6 +46,7 @@ jobs:
         password: ${{ secrets.DOCKER_ACCESS_TOKEN }} 
 
     - name: Build and push Docker image
+      timeout-minutes: 10
       uses: docker/build-push-action@v5
       with:
         context: ./product
