@@ -2,12 +2,12 @@ name: product CI/CD
 
 on:
   push:
-    branches: [ meccar ]
+    branches: [ main ]
     paths:
       - "product/**"
 
   pull_request:
-    branches: [ meccar ]
+    branches: [ main ]
     paths:
       - "product/**"
 
