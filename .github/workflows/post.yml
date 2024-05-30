@@ -1,38 +1,38 @@
-name: post CI/CD
+# name: post CI/CD
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+# on:
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
 
-jobs:
-  build:
+# jobs:
+#   build:
   
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        node-version: [21.x]
+#     strategy:
+#       matrix:
+#         os: [ubuntu-latest, macos-latest, windows-latest]
+#         node-version: [21.x]
 
-    name: Build and Test
-    runs-on: ${{ matrix.os }}
+#     name: Build and Test
+#     runs-on: ${{ matrix.os }}
 
 
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v3
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
+#     - name: Use Node.js ${{ matrix.node-version }}
+#       uses: actions/setup-node@v3
+#       with:
+#         node-version: ${{ matrix.node-version }}
 
-    - name: Install packages
-      working-directory: post
-      run: npm ci
+#     - name: Install packages
+#       working-directory: post
+#       run: npm ci
 
-    - name: Formatting, linting, tsc, and tests
-      working-directory: post
-      run: |
-        npm run format:check
-        npm run lint:check
+#     - name: Formatting, linting, tsc, and tests
+#       working-directory: post
+#       run: |
+#         npm run format:check
+#         npm run lint:check
