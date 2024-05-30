@@ -17,8 +17,12 @@ RUN npm run install-product --omit=dev
 
 COPY . .
 
+# Set file permissions
+RUN chmod 644 /app/product/key.pem
+
 USER node
+
+EXPOSE 3003
 
 CMD ["npm", "start"]
 
-EXPOSE 3003
