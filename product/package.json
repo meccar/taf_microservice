@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "install-product": "npm install",
     "format:check": "prettier --check . --max-warnings=0",
     "format:write": "prettier --write .",
     "lint:check": "eslint .",
