@@ -3,12 +3,12 @@ name: product CI/CD
 on:
   push:
     branches: [main]
-    # paths:
-    #   - 'product'
+    paths: 
+      - "product/**"
+    
   pull_request:
     branches: [main]
-    # paths:
-      # - 'product'
+      - "product/**"
 
 jobs:
   build:
