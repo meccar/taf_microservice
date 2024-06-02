@@ -1,13 +1,13 @@
 const express = require("express");
-const https = require("https");
 const helmet = require("helmet");
 const passport = require("passport");
 // const { Strategy } = require("passport-google-oauth20");
 const cookieSession = require("cookie-session");
 
-const Config = require("./config/config");
-const CreateChannel = require("./config/messages");
 const productRoute = require("./routes/product.route");
+const Config = require("./config/config");
+const catchAsync = require("./utils/catchAsync");
+const { CreateChannel } = require("./config/messages");
 
 // const AUTH_OPTIONS = {
 //   callbackURL: "/auth/google/callback",
@@ -21,6 +21,11 @@ const productRoute = require("./routes/product.route");
 // }
 
 // passport.use(new Strategy(AUTH_OPTIONS, verifyCallback));
+
+const Channel = catchAsync(async (req, res, next) => {
+  req.channel = await CreateChannel();
+  next();
+});
 
 const app = express();
 
@@ -38,25 +43,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.json());
+app.use("/api/v1/product", Channel, productRoute);
 
-const channel = CreateChannel();
-
-const ChannelMiddleware = (req, res, next) => {
-  req.channel = channel;
-  next();
-};
-
-app.use("/api/v1/product", ChannelMiddleware, productRoute);
-
-https
-  .createServer(
-    {
-      key: Config.key,
-      cert: Config.cert,
-    },
-    app,
-  )
-  .listen(Config.PORT, () => {
-    // eslint-disable-next-line no-console
-    console.log(`Server is listening on ${Config.PORT}`);
-  });
+module.exports = app;
