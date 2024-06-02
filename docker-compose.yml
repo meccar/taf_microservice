@@ -1,3 +1,4 @@
+# docker-compose build && docker-compose up
 version: "3"
 
 services:
@@ -19,6 +20,8 @@ services:
     restart: always
     depends_on:
       - "nosql-db"
+    volumes:
+      - .:/app
       - /app/product/node_modules
   
   accounts:
@@ -31,7 +34,9 @@ services:
     restart: always
     depends_on:
       - "nosql-db"
-      - /app/product/node_modules
+    volumes:
+      - .:/app
+      - /app/account/node_modules
 
   posts:
     build:
@@ -43,4 +48,20 @@ services:
     restart: always
     depends_on:
       - "nosql-db"
-      - /app/product/node_modules
+    volumes:
+      - .:/app  
+      - /app/post/node_modules
+
+  nginx-proxy:
+    build:
+      dockerfile: Dockerfile
+      context: ./proxy
+    ports:
+      - "3002:3002"
+    restart: always
+    depends_on:
+      - "products"
+      - "accounts"
+      - "posts"
+    ports:
+      - "80:80"
