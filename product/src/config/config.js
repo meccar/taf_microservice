@@ -13,6 +13,10 @@ module.exports = {
   CLIENT_SECRET: process.env.CLIENT_SECRET,
   COOKIE_KEY_1: process.env.COOKIE_KEY_1,
   COOKIE_KEY_2: process.env.COOKIE_KEY_2,
+  MESSAGE_BROKER_URL: process.env.MESSAGE_BROKER_URL,
+  EXCHANGE_NAME: "ONLINE SHOPPING",
+  SHOPPING_BINDING_KEY: "SHOPPING_SERVICE",
+  CUSTOMER_BINDING_KEY: "CUSTOMER_SERVICE",
   key: fs.readFileSync(path.join(__dirname, "../..", "key.pem"), "utf8"),
   cert: fs.readFileSync(path.join(__dirname, "../..", "cert.pem"), "utf8"),
 };

@@ -40,6 +40,7 @@ export default [
       "no-return-await": "off",
       "no-underscore-dangle": "off",
       "class-methods-use-this": "off",
+      camelcase: "off",
       "prefer-destructuring": ["error", { object: true, array: false }],
       "no-unused-vars": ["warn", { argsIgnorePattern: "req|res|next|val" }],
     },

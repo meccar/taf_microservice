@@ -1,6 +1,8 @@
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const APIFeatures = require("../utils/apiFeatures");
+const PublishMessage = require("../config/messages");
+const { CUSTOMER_BINDING_KEY } = require("../config/config");
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
@@ -9,6 +11,8 @@ exports.deleteOne = (Model) =>
     if (!doc) {
       return next(new AppError("No document found with that ID", 404));
     }
+
+    PublishMessage(req.channel, CUSTOMER_BINDING_KEY, JSON.stringify(doc));
 
     return res.status(204).json({
       status: "success",
@@ -27,6 +31,8 @@ exports.updateOne = (Model) =>
       return next(new AppError("No document found with that ID", 404));
     }
 
+    PublishMessage(req.channel, CUSTOMER_BINDING_KEY, JSON.stringify(doc));
+
     return res.status(200).json({
       status: "success",
       data: {
@@ -42,6 +48,8 @@ exports.createOne = (Model) =>
     if (!doc) {
       return next(new AppError("No document found with that ID", 404));
     }
+
+    PublishMessage(req.channel, CUSTOMER_BINDING_KEY, JSON.stringify(doc));
 
     return res.status(201).json({
       status: "success",
@@ -61,6 +69,8 @@ exports.getOne = (Model, populateOptions) =>
     if (!doc) {
       return next("No document found with that ID", 404);
     }
+
+    PublishMessage(req.channel, CUSTOMER_BINDING_KEY, JSON.stringify(doc));
 
     return res.status(200).json({
       status: "success",
@@ -87,6 +97,8 @@ exports.getAll = (Model) =>
     if (!doc) {
       return next(new AppError("No document found with that ID", 404));
     }
+
+    PublishMessage(req.channel, CUSTOMER_BINDING_KEY, JSON.stringify(doc));
 
     return res.status(200).json({
       status: "success",
