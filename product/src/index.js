@@ -7,6 +7,7 @@ const cookieSession = require("cookie-session");
 const productRoute = require("./routes/product.route");
 const Config = require("./config/config");
 const catchAsync = require("./utils/catchAsync");
+const { CreateChannel } = require("./config/messages");
 
 // const AUTH_OPTIONS = {
 //   callbackURL: "/auth/google/callback",
@@ -35,7 +36,7 @@ app.use(
     name: "session",
     maxAge: 24 * 60 * 60 * 1000,
     keys: [Config.COOKIE_KEY_1, Config.COOKIE_KEY_2],
-  })
+  }),
 );
 
 app.use(passport.initialize());
