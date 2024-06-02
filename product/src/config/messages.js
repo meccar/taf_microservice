@@ -1,29 +1,34 @@
-const catchAsync = require("../utils/catchAsync");
 const amqplib = require("amqplib");
+const catchAsync = require("../utils/catchAsync");
+const Config = require("./config");
 
 // create a channel
 module.exports.CreateChannel = catchAsync(async () => {
-  const connection = await amqplib.connect(MESSAGE_BROKER_URL);
+  const connection = await amqplib.connect(Config.MESSAGE_BROKER_URL);
   const channel = await connection.createChannel();
-  await channel.assertExchange(EXCHANGE_NAME, "direct", false);
+  await channel.assertExchange(Config.EXCHANGE_NAME, "direct", false);
   return channel;
 });
 
 // publish messages
 module.exports.PublishMessage = catchAsync(
-  async (channel, binding_key, message) => {
-    await channel.publish(EXCHANGE_NAME, binding_key, Buffer.from(message));
+  async (channel, bindingKey, message) => {
+    await channel.publish(
+      Config.EXCHANGE_NAME,
+      bindingKey,
+      Buffer.from(message),
+    );
   },
 );
 
 // subcribe messages
 module.exports.SubcribeMessage = catchAsync(
-  async (channel, service, binding_key) => {
+  async (channel, service, bindingKey) => {
     const appQueue = await channel.assertQueue("QUEUE_NAME");
-    channel.bindQueue(appQueue.queue, EXCHANGE_NAME, binding_key);
+    channel.bindQueue(appQueue.queue, Config.EXCHANGE_NAME, bindingKey);
     channel.consume(appQueue.queue, (data) => {
-      console.log("==> Received data");
-      console.log(data.content.toString());
+      // console.log("==> Received data");
+      // console.log(data.content.toString());
       channel.ack(data);
     });
   },

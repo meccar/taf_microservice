@@ -39,16 +39,14 @@ app.use(passport.session());
 
 app.use(express.json());
 
-const channel = await CreateChannel();
+const channel = CreateChannel();
 
-const ChannelMiddleware = (channel) => {
-  return (req, res, next) => {
-    req.channel = channel;
-    next();
-  };
+const ChannelMiddleware = (req, res, next) => {
+  req.channel = channel;
+  next();
 };
 
-app.use("/api/v1/product", ChannelMiddleware(channel), productRoute);
+app.use("/api/v1/product", ChannelMiddleware, productRoute);
 
 https
   .createServer(

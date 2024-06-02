@@ -2,10 +2,7 @@ const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const APIFeatures = require("../utils/apiFeatures");
 const PublishMessage = require("../config/messages");
-const {
-  SHOPPING_BINDING_KEY,
-  CUSTOMER_BINDING_KEY,
-} = require("../config/config");
+const { CUSTOMER_BINDING_KEY } = require("../config/config");
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
