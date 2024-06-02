@@ -6,6 +6,7 @@ const passport = require("passport");
 const cookieSession = require("cookie-session");
 
 const Config = require("./config/config");
+const CreateChannel = require("./config/messages");
 const productRoute = require("./routes/product.route");
 
 // const AUTH_OPTIONS = {
@@ -38,7 +39,16 @@ app.use(passport.session());
 
 app.use(express.json());
 
-app.use("/api/v1/product", productRoute);
+const channel = await CreateChannel();
+
+const ChannelMiddleware = (channel) => {
+  return (req, res, next) => {
+    req.channel = channel;
+    next();
+  };
+};
+
+app.use("/api/v1/product", ChannelMiddleware(channel), productRoute);
 
 https
   .createServer(
