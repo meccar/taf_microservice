@@ -4,10 +4,7 @@ const mongoose = require("mongoose");
 const Config = require("./config/config");
 const app = require("./index");
 
-const url = process.env.MONGODB.replace(
-  "<password>",
-  process.env.MONGODB_PASSWORD,
-);
+const url = Config.MONGODB.replace("<password>", Config.MONGODB_PASSWORD);
 
 // eslint-disable-next-line no-console
 mongoose.connect(url).then(() => console.log("Connected to MongoDB"));
@@ -18,7 +15,7 @@ https
       key: Config.key,
       cert: Config.cert,
     },
-    app,
+    app
   )
   .listen(Config.PORT, () => {
     // eslint-disable-next-line no-console
