@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: product-srv
 spec:
-  type: NodePort
   selector:
     app: product
-  ports: 
+  type: NodePort
+  ports:
     - name: product
       protocol: TCP
       port: 3003
