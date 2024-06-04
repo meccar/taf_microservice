@@ -15,3 +15,17 @@ spec:
       containers:
         - name: product
           image: meccar/product:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-clusterip-srv
+spec:
+  selector:
+    app: product
+  type: ClusterIP
+  ports:
+    - name: product
+      protocol: TCP
+      port: 3003
+      targetPort: 3003
