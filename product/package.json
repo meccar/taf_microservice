@@ -8,8 +8,8 @@
     "format:write": "prettier --write .",
     "lint:check": "eslint .",
     "lint:fix": "eslint --fix . --max-warnings=0",
-    "start": "NODE_ENV=production nodemon src/server.js",
-    "dev": "nodemon src/server.js",
+    "prod": "NODE_ENV=production nodemon src/server.js",
+    "start": "nodemon src/server.js",
     "test": "jest"
   },
   "keywords": [],

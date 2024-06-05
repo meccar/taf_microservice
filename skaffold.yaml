@@ -1,10 +1,9 @@
 apiVersion: skaffold/v4beta11
 kind: Config
-deploy:
-  kubectl:
-    manifests:
-      - ./infra/k8s/*
-      - ./infra/k8s-dev/*
+manifests:
+  rawYaml:
+    - ./infra/k8s/*
+    # - ./infra/k8s-dev/*
 build:
   local:
     push: false
@@ -16,7 +15,7 @@ build:
       sync:
         manual:
           - src: "src/**/*.js"
-            dest: .  
+            dest: .
 
     - image: meccar/auth
       context: auth
@@ -25,5 +24,4 @@ build:
       sync:
         manual:
           - src: "src/**/*.js"
-            dest: .      
-    
+            dest: .
