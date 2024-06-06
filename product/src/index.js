@@ -11,6 +11,8 @@ const Config = require("./config/config");
 const catchAsync = require("./utils/catchAsync");
 const { CreateChannel } = require("./config/messages");
 
+const ErrorHandler = require("./controllers/error.controller");
+
 // const AUTH_OPTIONS = {
 //   callbackURL: "/auth/google/callback",
 //   clientID: Config.CLIENT_ID,
@@ -47,5 +49,7 @@ app.use(passport.session());
 
 app.use(express.json());
 app.use("/api/v1/product", Channel, productRoute);
+
+app.use(ErrorHandler);
 
 module.exports = app;
