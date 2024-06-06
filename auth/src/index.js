@@ -1,9 +1,9 @@
 const express = require("express");
 
 const currentUserRouter = require("./src/routes/currentUser.route");
+const signUpRouter = require("./src/routes/signUp.route");
 const signInRouter = require("./src/routes/signIn.route");
 const signOutRouter = require("./src/routes/signOut.route");
-const signUpRouter = require("./src/routes/signUp.route");
 
 const ErrorHandler = require("./controllers/error.controller");
 
@@ -14,9 +14,9 @@ const PORT = 8001;
 app.use(express.json());
 
 app.use(currentUserRouter);
+app.use(signUpRouter);
 app.use(signInRouter);
 app.use(signOutRouter);
-app.use(signUpRouter);
 
 app.use(ErrorHandler);
 
