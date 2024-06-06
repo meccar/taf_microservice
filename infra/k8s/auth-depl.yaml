@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: meccar/auth:latest
+          image: us.gcr.io/taf-dev-425515/auth:latest
 ---
 apiVersion: v1
 kind: Service
