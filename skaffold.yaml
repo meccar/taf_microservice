@@ -5,10 +5,13 @@ manifests:
     - ./infra/k8s/*
     # - ./infra/k8s-dev/*
 build:
-  local:
-    push: false
+  # local:
+  #   push: false
+  googleCloudBuild:
+    projectId: taf-dev-425515
+  
   artifacts:
-    - image: meccar/product
+    - image: us.gcr.io/taf-dev-425515/product
       context: product
       docker:
         dockerfile: Dockerfile
@@ -17,7 +20,7 @@ build:
           - src: "src/**/*.js"
             dest: .
 
-    - image: meccar/auth
+    - image: us.gcr.io/taf-dev-425515/auth
       context: auth
       docker:
         dockerfile: Dockerfile
