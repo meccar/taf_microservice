@@ -1,9 +1,14 @@
 const express = require("express");
+
+const User = require("../models/signUp.model");
+const { signUpController } = require("../controllers/signUp.controller");
+const {
+  signUpModel,
+  CheckValidation,
+} = require("../middlewares/signUp.middleware");
+
 const router = express.Router();
 
-const signUpController = require("../controllers/signUp.controller");
-const signUpModel = require("../models/signUp.model");
-
-router.get("api/users/signup", signUpModel, signUpController);
+router.route("/").post(signUpModel, CheckValidation(User), signUpController);
 
 module.exports = router;

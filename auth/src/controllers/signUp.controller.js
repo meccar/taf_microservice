@@ -1,19 +1,10 @@
-const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 
 const catchAsync = require("../utils/catchAsync");
-const AppError = require("../utils/appError");
 
 exports.signUpController = catchAsync(async (req, res) => {
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) return next(new AppError("Empty", 400));
-
-  const { email, password } = req.body;
-
-  const existingUser = await User.findone({ email });
-
-  if (existingUser) return next(new AppError("Email in use", 400));
+  const email = req.body.email;
+  const password = req.body.password;
 
   const user = await User.create({ email, password });
   await user.save();
@@ -23,12 +14,17 @@ exports.signUpController = catchAsync(async (req, res) => {
       id: user.id,
       email: user.email,
     },
-    "asdf",
+    "asdf"
   );
 
   req.session = {
     jwt: usetJWT,
   };
 
-  return res.send({});
+  return res.status(201).json({
+    status: "success",
+    data: {
+      data: user,
+    },
+  });
 });

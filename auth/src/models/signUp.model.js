@@ -1,5 +1,5 @@
 const { body } = require("express-validator");
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 exports.signUpModel = [
   body("email").isEmail().withMessage("Email must be valid"),
@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema(
         delete ret.__v;
       },
     },
-  },
+  }
 );
 
 exports.User = mongoose.model("User", userSchema);
