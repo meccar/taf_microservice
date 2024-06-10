@@ -4,20 +4,25 @@ const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const { User, registerValidation } = require("../models/signUp.model");
 
-exports.signUpModel = [
-  body("email").isEmail().withMessage("Email must be valid"),
-  body("password")
-    .trim()
-    .isLength({ min: 12 })
-    .withMessage("Password must be more than 12 characters"),
-];
+// exports.signUpModel = [
+//   body("email").isEmail().withMessage("Email must be valid"),
+//   body("password")
+//     .trim()
+//     .isLength({ min: 12 })
+//     .withMessage("Password must be more than 12 characters"),
+// ];
 
 exports.RegisterValidation = catchAsync(async (req, res, next) => {
-  const errors = registerValidation.validate(req.body, {
+  const { error } = registerValidation.validate(req.body, {
     abortEarly: false,
   });
 
-  if (!errors.isEmpty()) return next(new AppError("Empty", 400));
+  if (error) {
+    const errorMessages = error.details
+      .map((detail) => detail.message)
+      .join(", ");
+    return next(new AppError(errorMessages, 400));
+  }
 
   const existing = await User.findone(req.body.email);
 

@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const Joi = require("joi");
 
 const usernameMessage = {
-  "string.alphanum": "Only alphabets and numbers are accepted",
+  "string.alphanum": "Only alphanumeric characters are accepted",
   "string.empty": "Username is required",
   "string.min": "Username must be at least 3 characters long",
   "string.max": "Username cannot exceed 30 characters",
@@ -36,7 +36,7 @@ exports.registerValidation = Joi.object({
     .messages(usernameMessage),
   email: Joi.string().email().required().messages(emailMessage),
   password: Joi.string()
-    .strip()
+    .trim()
     .pattern(new RegExp("^.{12,60}$"))
     .required()
     .messages(passwordMessge),
@@ -46,13 +46,13 @@ exports.registerValidation = Joi.object({
     .messages(confirmPasswordMessage),
 });
 
-exports.signUpModel = [
-  body("email").isEmail().withMessage("Email must be valid"),
-  body("password")
-    .trim()
-    .isLength({ min: 12 })
-    .withMessage("Password must be more than 12 characters"),
-];
+// exports.signUpModel = [
+//   body("email").isEmail().withMessage("Email must be valid"),
+//   body("password")
+//     .trim()
+//     .isLength({ min: 12 })
+//     .withMessage("Password must be more than 12 characters"),
+// ];
 
 const UserSchema = new mongoose.Schema(
   {
