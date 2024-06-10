@@ -1,30 +1,36 @@
 const jwt = require("jsonwebtoken");
 
 const catchAsync = require("../utils/catchAsync");
+const User = require("../models/signUp.model");
 
-exports.signUpController = catchAsync(async (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
+const createSendToken = (user, statusCode, req, res) => {
+  // const token = signToken(user.id);
 
-  const user = await User.create({ email, password });
-  await user.save();
+  // res.cookie("jwt", token, {
+  //   expires: new Date(
+  //     Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
+  //   ),
+  //   httpOnly: true,
+  //   secure: req.secure || req.headers["x-forwarded-proto"] === "https",
+  // });
 
-  const usetJWT = jwt.sign(
-    {
-      id: user.id,
-      email: user.email,
-    },
-    "asdf"
-  );
+  // Remove password from output
+  user.password = undefined;
 
-  req.session = {
-    jwt: usetJWT,
-  };
-
-  return res.status(201).json({
+  res.status(statusCode).json({
     status: "success",
+    // token,
     data: {
-      data: user,
+      user,
     },
   });
+};
+
+exports.signUpController = catchAsync(async (req, res) => {
+  const user = await User.create({
+    email: req.body.email,
+    password: req.body.password,
+  });
+
+  createSendToken(user, 201, req, res);
 });

@@ -16,11 +16,11 @@ app.use(
   cookieSession({
     signed: false,
     secure: true,
-  })
+  }),
 );
 
 // app.use("api/users/currentUser", currentUserRoute);
-// app.use("api/users/signup", signUpRoute);
+app.use("api/users/signup", signUpRoute);
 // app.use(signInRoute);
 // app.use(signOutRoute);
 
