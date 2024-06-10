@@ -1,4 +1,4 @@
-const body = require("express-validator");
+const { body } = require("express-validator");
 
 (exports.signInController = [
   body("email").isEmail().withMessage("Email must be valid"),

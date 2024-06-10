@@ -1,3 +1,5 @@
-exports.currentUserController = (req, res) => {
-  res.send("Hi");
-};
+const catchAsync = require("../utils/catchAsync");
+
+exports.currentUserController = catchAsync(async (req, res) => {
+  return res.send("Hi");
+});

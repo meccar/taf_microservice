@@ -1,16 +1,14 @@
 const express = require("express");
 const cookieSession = require("cookie-session");
 
-const currentUserRouter = require("./src/routes/currentUser.route");
-const signUpRouter = require("./src/routes/signUp.route");
-const signInRouter = require("./src/routes/signIn.route");
-const signOutRouter = require("./src/routes/signOut.route");
+// const currentUserRoute = require("./routes/currentUser.route");
+const signUpRoute = require("./routes/signUp.route");
+// const signInRoute = require("./routes/signIn.route");
+// const signOutRoute = require("./routes/signOut.route");
 
 const ErrorHandler = require("./controllers/error.controller");
 
 const app = express();
-
-const PORT = 8001;
 
 app.set("trust proxy", true);
 app.use(express.json());
@@ -21,13 +19,15 @@ app.use(
   }),
 );
 
-app.use(currentUserRouter);
-app.use(signUpRouter);
-app.use(signInRouter);
-app.use(signOutRouter);
+// app.use("api/users/currentUser", currentUserRoute);
+app.use("api/users/signup", signUpRoute);
+// app.use(signInRoute);
+// app.use(signOutRoute);
 
 app.use(ErrorHandler);
 
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Listening on port ${PORT}`);
+// });
+
+module.exports = app;

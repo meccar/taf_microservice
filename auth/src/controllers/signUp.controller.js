@@ -1,34 +1,36 @@
-const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 
 const catchAsync = require("../utils/catchAsync");
-const AppError = require("../utils/appError");
+const User = require("../models/signUp.model");
+
+const createSendToken = (user, statusCode, req, res) => {
+  // const token = signToken(user.id);
+
+  // res.cookie("jwt", token, {
+  //   expires: new Date(
+  //     Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
+  //   ),
+  //   httpOnly: true,
+  //   secure: req.secure || req.headers["x-forwarded-proto"] === "https",
+  // });
+
+  // Remove password from output
+  user.password = undefined;
+
+  res.status(statusCode).json({
+    status: "success",
+    // token,
+    data: {
+      user,
+    },
+  });
+};
 
 exports.signUpController = catchAsync(async (req, res) => {
-  const errors = validationResult(req);
+  const user = await User.create({
+    email: req.body.email,
+    password: req.body.password,
+  });
 
-  if (!errors.isEmpty()) return next(new AppError("Empty", 400));
-
-  const { email, password } = req.body;
-
-  const existingUser = await User.findone({ email });
-
-  if (existingUser) return next(new AppError("Email in use", 400));
-
-  const user = await User.create({ email, password });
-  await user.save();
-
-  const usetJWT = jwt.sign(
-    {
-      id: user.id,
-      email: user.email,
-    },
-    "asdf",
-  );
-
-  req.session = {
-    jwt: usetJWT,
-  };
-
-  return res.send({});
+  createSendToken(user, 201, req, res);
 });
