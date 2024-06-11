@@ -1,9 +1,11 @@
 const express = require("express");
 const cookieSession = require("cookie-session");
+const bodyParser = require("body-parser");
+const morgan = require("morgan");
 
 // const currentUserRoute = require("./routes/currentUser.route");
-const signUpRoute = require("./routes/signUp.route");
-// const signInRoute = require("./routes/signIn.route");
+const registerRoute = require("./routes/register.route");
+const loginRoute = require("./routes/login.route");
 // const signOutRoute = require("./routes/signOut.route");
 
 const ErrorHandler = require("./controllers/error.controller");
@@ -11,7 +13,15 @@ const ErrorHandler = require("./controllers/error.controller");
 const app = express();
 
 app.set("trust proxy", true);
-app.use(express.json());
+
+// Development logging
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(express.json({ limit: "10kb" }));
 app.use(
   cookieSession({
     signed: false,
@@ -20,14 +30,10 @@ app.use(
 );
 
 // app.use("api/users/currentUser", currentUserRoute);
-app.use("api/users/signup", signUpRoute);
-// app.use(signInRoute);
+app.use("/api/v1/user/register", registerRoute);
+// app.use("/api/v1/user/login", signInRoute);
 // app.use(signOutRoute);
 
 app.use(ErrorHandler);
-
-// app.listen(PORT, () => {
-//   console.log(`Listening on port ${PORT}`);
-// });
 
 module.exports = app;
