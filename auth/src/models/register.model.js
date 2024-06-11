@@ -1,4 +1,3 @@
-const { body } = require("express-validator");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
@@ -21,13 +20,13 @@ const passwordMessge = {
     "Password must be between 12 and 60 characters and contain only letters and numbers",
 };
 
-const confirmPasswordMessage = {
+const passwordConfirmMessage = {
   "any.only": "Passwords do not match",
   "string.empty": "Confirm password is required",
 };
 
 // Define a schema for user registration
-exports.registerValidation = Joi.object({
+const registerValidation = Joi.object({
   username: Joi.string()
     .alphanum()
     .min(3)
@@ -40,27 +39,29 @@ exports.registerValidation = Joi.object({
     .pattern(new RegExp("^.{12,60}$"))
     .required()
     .messages(passwordMessge),
-  confirmPassword: Joi.string()
+  passwordConfirm: Joi.string()
     .valid(Joi.ref("password"))
     .required()
-    .messages(confirmPasswordMessage),
+    .messages(passwordConfirmMessage),
 });
-
-// exports.signUpModel = [
-//   body("email").isEmail().withMessage("Email must be valid"),
-//   body("password")
-//     .trim()
-//     .isLength({ min: 12 })
-//     .withMessage("Password must be more than 12 characters"),
-// ];
 
 const UserSchema = new mongoose.Schema(
   {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     email: {
       type: String,
       required: true,
+      unique: true,
     },
     password: {
+      type: String,
+      required: true,
+    },
+    passwordConfirm: {
       type: String,
       required: true,
     },
@@ -83,8 +84,9 @@ UserSchema.pre("save", async function (next) {
 
   // Hash password with cost of 12
   this.password = await bcrypt.hash(this.password, 12);
-  // this.passwordConfirm = undefined;
+  this.passwordConfirm = undefined;
   next();
 });
 
-exports.User = mongoose.model("User", UserSchema);
+const User = mongoose.model("User", UserSchema);
+module.exports = { User, registerValidation };

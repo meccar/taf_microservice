@@ -1,7 +1,4 @@
-const jwt = require("jsonwebtoken");
-
 const catchAsync = require("../utils/catchAsync");
-const User = require("../models/signUp.model");
 
 const createSendToken = (user, statusCode, req, res) => {
   // const token = signToken(user.id);
@@ -26,11 +23,8 @@ const createSendToken = (user, statusCode, req, res) => {
   });
 };
 
-exports.signUpController = catchAsync(async (req, res) => {
-  const user = await User.create({
-    email: req.body.email,
-    password: req.body.password,
+exports.LoginController = catchAsync(async (req, res) => {
+  res.status(200).json({
+    status: "success",
   });
-
-  createSendToken(user, 201, req, res);
 });
