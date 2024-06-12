@@ -15,7 +15,7 @@ https
       key: Config.key,
       cert: Config.cert,
     },
-    app
+    app,
   )
   .listen(Config.PORT, () => {
     // eslint-disable-next-line no-console
