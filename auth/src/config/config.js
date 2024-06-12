@@ -9,6 +9,7 @@ dotenv.config({ path: configFile });
 module.exports = {
   PORT: process.env.PORT,
   DB_URL: process.env.DB_URL,
+  JWT_COOKIE_EXPIRY: process.env.JWT_COOKIE_EXPIRY,
   MONGODB_USER: process.env.MONGODB_USER,
   MONGODB_PASSWORD: process.env.MONGODB_PASSWORD,
   MONGODB: process.env.MONGODB,
