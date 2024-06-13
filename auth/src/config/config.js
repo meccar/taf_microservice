@@ -7,6 +7,7 @@ const configFile = `./.env.${env}`;
 dotenv.config({ path: configFile });
 
 module.exports = {
+  NODE_ENV: process.env.NODE_ENV,
   PORT: process.env.PORT,
   DB_URL: process.env.DB_URL,
   JWT_COOKIE_EXPIRY: process.env.JWT_COOKIE_EXPIRY,

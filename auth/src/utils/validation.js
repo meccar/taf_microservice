@@ -1,5 +1,5 @@
-const AppError = require("../utils/appError");
-const catchAsync = require("../utils/catchAsync");
+const AppError = require("./appError");
+const catchAsync = require("./catchAsync");
 
 const Validation = (schema) =>
   catchAsync(async (req, res, next) => {

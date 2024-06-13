@@ -1,17 +1,9 @@
 const jwt = require("jsonwebtoken");
+const { promisify } = require("util");
 
 const catchAsync = require("../utils/catchAsync");
-const Config = require("../config/config");
 const AppError = require("../utils/appError");
-
-exports.GenerateToken = (id) => {
-  const payload = {
-    sub: id,
-    iat: Date.now(),
-  };
-
-  return jwt.sign(payload, Config.privateKey, Config.option);
-};
+const Config = require("../config/config");
 
 exports.VerifyToken = catchAsync(async (req, res, next) => {
   let token;
@@ -27,7 +19,7 @@ exports.VerifyToken = catchAsync(async (req, res, next) => {
 
   if (!token) {
     return next(
-      new AppError("You are not logged in! Please log in to get access", 401)
+      new AppError("You are not logged in! Please log in to get access", 401),
     );
   }
 
@@ -37,7 +29,7 @@ exports.VerifyToken = catchAsync(async (req, res, next) => {
 
   if (!currentUser) {
     return next(
-      new AppError("The user belonging to this token no longer exists", 401)
+      new AppError("The user belonging to this token no longer exists", 401),
     );
   }
 
@@ -50,12 +42,7 @@ exports.VerifyToken = catchAsync(async (req, res, next) => {
   //     );
   //   }
 
-  req.user = currentUser;
-  res.locals.user = currentUser;
+  // req.user = currentUser;
+  // res.locals.user = currentUser;
   next();
 });
-
-exports.decodedToken = (token) => {
-  const decoded = jwt.decode(token);
-  return decoded;
-};
