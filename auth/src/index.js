@@ -31,7 +31,7 @@ app.use(
 
 // app.use("api/users/currentUser", currentUserRoute);
 app.use("/api/v1/user/register", registerRoute);
-// app.use("/api/v1/user/login", signInRoute);
+app.use("/api/v1/user/login", loginRoute);
 // app.use(signOutRoute);
 
 app.use(ErrorHandler);

@@ -20,4 +20,4 @@ const LoginValidation = Joi.object({
   password: Joi.string().trim().required().messages(passwordMessge),
 });
 
-module.exports = { LoginValidation };
+module.exports = LoginValidation;

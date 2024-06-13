@@ -1,7 +1,8 @@
 const catchAsync = require("../utils/catchAsync");
+const CreateToken = require("./auth.controller");
 
-exports.LoginController = catchAsync(async (req, res) => {
-  res.status(200).json({
-    status: "success",
-  });
+const LoginController = catchAsync(async (req, res) => {
+  CreateToken(req.user, 200, req, res);
 });
+
+module.exports = LoginController;

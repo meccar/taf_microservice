@@ -1,61 +1,17 @@
-const jwt = require("jsonwebtoken");
-
 const catchAsync = require("../utils/catchAsync");
-const Config = require("../config/config");
+const User = require("../models/user.model");
 const AppError = require("../utils/appError");
 
-exports.GenerateToken = (id) => {
-  const payload = {
-    sub: id,
-    iat: Date.now(),
-  };
+const Auth = catchAsync(async (req, res, next) => {
+  const user = await User.findOne(req.body.email).select("+password");
 
-  return jwt.sign(payload, Config.privateKey, Config.option);
-};
-
-exports.VerifyToken = catchAsync(async (req, res, next) => {
-  let token;
-
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
-    token = req.headers.authorization.split(" ")[1];
-  } else if (req.cookies.jwt) {
-    token = req.cookies.jwt;
+  if (!user || !(await user.correctPassword(password, user.password))) {
+    return next(new AppError("Incorrect email or password", 401));
   }
 
-  if (!token) {
-    return next(
-      new AppError("You are not logged in! Please log in to get access", 401)
-    );
-  }
+  req.user = user;
 
-  const decoded = await promisify(jwt.verify)(token, Config.publicKey);
-
-  const currentUser = await User.findById(decoded.sub);
-
-  if (!currentUser) {
-    return next(
-      new AppError("The user belonging to this token no longer exists", 401)
-    );
-  }
-
-  //   if (currentUser.changedPasswordAfter(decoded.iat)) {
-  //     return next(
-  //       new AppError(
-  //         "Your password was recently changed. Please login again",
-  //         401,
-  //       ),
-  //     );
-  //   }
-
-  req.user = currentUser;
-  res.locals.user = currentUser;
   next();
 });
 
-exports.decodedToken = (token) => {
-  const decoded = jwt.decode(token);
-  return decoded;
-};
+module.exports = Auth
