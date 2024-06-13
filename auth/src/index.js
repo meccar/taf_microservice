@@ -6,8 +6,8 @@ const morgan = require("morgan");
 // const currentUserRoute = require("./routes/currentUser.route");
 const registerRoute = require("./routes/register.route");
 const loginRoute = require("./routes/login.route");
-// const signOutRoute = require("./routes/signOut.route");
-
+const logoutRoute = require("./routes/logout.route");
+const Config = require("./config/config");
 const ErrorHandler = require("./controllers/error.controller");
 
 const app = express();
@@ -15,7 +15,7 @@ const app = express();
 app.set("trust proxy", true);
 
 // Development logging
-if (process.env.NODE_ENV === "development") {
+if (Config.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
@@ -25,14 +25,14 @@ app.use(express.json({ limit: "10kb" }));
 app.use(
   cookieSession({
     signed: false,
-    secure: true,
+    secure: Config.NODE_ENV !== "development",
   }),
 );
 
-// app.use("api/users/currentUser", currentUserRoute);
 app.use("/api/v1/user/register", registerRoute);
 app.use("/api/v1/user/login", loginRoute);
-// app.use(signOutRoute);
+app.use("/api/v1/user/logout", logoutRoute);
+// app.use("api/users/currentUser", protectedRoute);
 
 app.use(ErrorHandler);
 

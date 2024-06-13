@@ -1,5 +1,5 @@
 const Config = require("../config/config");
-const GenerateToken = require("../middlewares/auth.middleware");
+const GenerateToken = require("../utils/jwt");
 
 exports.CreateToken = (user, statusCode, req, res) => {
   const token = GenerateToken(user.id);
@@ -11,6 +11,10 @@ exports.CreateToken = (user, statusCode, req, res) => {
     httpOnly: true,
     secure: req.secure || req.headers["x-forwarded-proto"] === "https",
   });
+
+  req.session = {
+    jwt: token,
+  };
 
   // Remove password from output
   user.password = undefined;

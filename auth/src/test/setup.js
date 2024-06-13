@@ -1,8 +1,7 @@
 const { MongoMemoryServer } = require("mongodb-memory-server");
 const mongoose = require("mongoose");
-// const app = require("../index");
 
-let mongo;
+let mongoServer;
 beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create({
     binary: {
@@ -10,9 +9,10 @@ beforeAll(async () => {
     },
   });
 
-  const mongoUri = await mongo.getUri();
+  const mongoUri = mongoServer.getUri();
 
   await mongoose.connect(mongoUri, {});
+  console.log("Connected to in-memory MongoDB");
 });
 
 beforeEach(async () => {
@@ -21,11 +21,13 @@ beforeEach(async () => {
   for (let collection of collections) {
     await collection.deleteMany({});
   }
+  console.log("Cleared collections");
 });
 
 afterAll(async () => {
-  if (mongo) {
-    await mongo.stop();
+  if (mongoServer) {
+    await mongoServer.stop();
   }
   await mongoose.connection.close();
+  console.log("Disconnected from in-memory MongoDB");
 });

@@ -10,7 +10,8 @@
     "testEnvironment": "node",
     "setupFilesAfterEnv": [
       "./src/test/setup.js"
-    ]
+    ],
+    "testTimeout": 60000
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +25,7 @@
     "express-validator": "^7.1.0",
     "joi": "^17.13.1",
     "jsonwebtoken": "^9.0.2",
+    "mongodb-memory-server-core": "^9.3.0",
     "mongoose": "^8.4.1",
     "nodemon": "^3.1.3"
   },
