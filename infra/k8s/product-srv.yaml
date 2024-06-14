@@ -9,5 +9,5 @@ spec:
   ports:
     - name: product
       protocol: TCP
-      port: 3003
-      targetPort: 3003
+      port: 8003
+      targetPort: 8003
