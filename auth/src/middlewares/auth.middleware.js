@@ -5,7 +5,7 @@ const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const Config = require("../config/config");
 
-exports.VerifyToken = catchAsync(async (req, res, next) => {
+const VerifyToken = catchAsync(async (req, res, next) => {
   let token;
 
   if (
@@ -46,3 +46,5 @@ exports.VerifyToken = catchAsync(async (req, res, next) => {
   // res.locals.user = currentUser;
   next();
 });
+
+module.exports = VerifyToken;
