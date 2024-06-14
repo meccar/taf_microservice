@@ -1,6 +1,6 @@
 FROM node:lts-alpine
 
-WORKDIR /app/auth
+WORKDIR /app/client
 
 COPY package.json .
 
@@ -8,11 +8,8 @@ RUN npm install --omit=dev
 
 COPY . .
 
-# RUN chmod 644 /app/auth/key.pem
-
 USER node
 
-EXPOSE 8001
+EXPOSE 3000
 
 CMD ["npm", "run", "dev"]
-

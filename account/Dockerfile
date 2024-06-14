@@ -2,12 +2,12 @@ FROM node
 
 WORKDIR /app/account
 
-COPY package.json
+COPY package.json .
 
 RUN npm install
 
 COPY . .
 
-EXPOSE 3001
+EXPOSE 8004
 
 CMD ["npm", "start"]

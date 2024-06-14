@@ -23,7 +23,7 @@ RUN chmod 644 /app/product/key.pem
 
 USER node
 
-EXPOSE 3003
+EXPOSE 8003
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
 
