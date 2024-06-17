@@ -11,6 +11,7 @@ build:
     projectId: taf-dev-425515
 
   artifacts:
+    # - image: meccar/product (local)
     - image: us.gcr.io/taf-dev-425515/product
       context: product
       docker:
@@ -20,6 +21,7 @@ build:
           - src: "src/**/*.js"
             dest: .
 
+    # - image: meccar/auth (local)
     - image: us.gcr.io/taf-dev-425515/auth
       context: auth
       docker:
@@ -27,4 +29,14 @@ build:
       sync:
         manual:
           - src: "src/**/*.js"
+            dest: .
+
+    # - image: meccar/client (local)
+    - image: us.gcr.io/taf-dev-425515/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
             dest: .
