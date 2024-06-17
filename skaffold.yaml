@@ -5,10 +5,11 @@ manifests:
     - ./infra/k8s/*
     - ./infra/k8s-dev/*
 build:
-  # local:
-  #   push: false
-  googleCloudBuild:
-    projectId: taf-dev-425515
+  local:
+    push: false
+
+  # googleCloudBuild:
+  #   projectId: taf-dev-425515
 
   artifacts:
     # - image: meccar/product (local)
