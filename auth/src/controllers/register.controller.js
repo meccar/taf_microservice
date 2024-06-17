@@ -1,5 +1,6 @@
 const catchAsync = require("../utils/catchAsync");
 const User = require("../models/user.model");
+const CreateToken = require("./auth.controller");
 
 const RegisterController = catchAsync(async (req, res) => {
   const user = await User.create({
@@ -9,13 +10,7 @@ const RegisterController = catchAsync(async (req, res) => {
     passwordConfirm: req.body.passwordConfirm,
   });
 
-  // createSendToken(user, 201, req, res);
-  return res.status(201).json({
-    status: "success",
-    data: {
-      user,
-    },
-  });
+  CreateToken(user, 201, req, res);
 });
 
 module.exports = RegisterController;

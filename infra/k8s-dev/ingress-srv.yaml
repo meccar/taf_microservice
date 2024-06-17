@@ -11,15 +11,15 @@ spec:
     - host: taf.dev
       http:
         paths:
-          - path: /product
-            pathType: Prefix
+          - path: /api/v1/product/?(.*)
+            pathType: ImplementationSpecific
             backend:
               service:
-                name: product-clusterip-srv
+                name: product-srv
                 port:
                   number: 8003
 
-          - path: /api/users/?(.*)
+          - path: /api/v1/user/?(.*)
             pathType: ImplementationSpecific
             # pathType: Prefix
             backend:
@@ -27,3 +27,8 @@ spec:
                 name: auth-srv
                 port:
                   number: 8001
+
+          - path: /?(.*)
+            backend:
+              serviceName: client-srv
+              servicePort: 3000
