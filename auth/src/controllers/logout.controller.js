@@ -6,7 +6,7 @@ const logoutController = (req, res) => {
 
   req.session = null;
 
-  res.status(200).json({ status: "success" });
+  return res.status(200).json({ status: "success" });
 };
 
 module.exports = logoutController;
