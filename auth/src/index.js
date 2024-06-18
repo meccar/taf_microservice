@@ -6,6 +6,7 @@ const morgan = require("morgan");
 // const currentUserRoute = require("./routes/currentUser.route");
 const registerRoute = require("./routes/register.route");
 const loginRoute = require("./routes/login.route");
+const userRoute = require("./routes/user.route");
 const logoutRoute = require("./routes/logout.route");
 const Config = require("./config/config");
 const ErrorHandler = require("./controllers/error.controller");
@@ -31,6 +32,7 @@ app.use(
 
 app.use("/api/v1/user/register", registerRoute);
 app.use("/api/v1/user/login", loginRoute);
+app.use("/api/v1/user/currentUser", userRoute);
 app.use("/api/v1/user/logout", logoutRoute);
 // app.use("api/users/currentUser", protectedRoute);
 

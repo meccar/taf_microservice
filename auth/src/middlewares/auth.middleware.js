@@ -44,8 +44,8 @@ const VerifyToken = catchAsync(async (req, res, next) => {
   //     );
   //   }
 
-  // req.user = currentUser;
-  // res.locals.user = currentUser;
+  req.user = currentUser;
+  res.locals.user = currentUser;
   next();
 });
 
