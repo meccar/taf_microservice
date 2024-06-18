@@ -18,5 +18,5 @@ it("returns a 201 on clearing the cookie while logging out", async () => {
     .expect(200);
 
   console.log(response.get("Set-Cookie"));
-//   expect(response.get("Set-Cookie")[0].toEqual());
+  //   expect(response.get("Set-Cookie")[0].toEqual());
 });

@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
+const User = require("../controllers/user.controller");
 const VerifyToken = require("@tafvn/common");
-const logoutController = require("../controllers/logout.controller");
 
-router.route("/").get(VerifyToken, logoutController);
+router.route("/").get(VerifyToken, User);
 
 module.exports = router;

@@ -6,7 +6,7 @@ export default () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { doRequest, errors } = useRequest({
-    url: "/api/v1/user/register",
+    url: "/api/v1/user/login",
     body: {
       email,
       password,
@@ -25,7 +25,7 @@ export default () => {
       onSubmit={onSubmit}
       className="max-w-md mx-auto p-4 bg-white rounded shadow-md"
     >
-      <h1 className="text-2xl font-bold mb-4">Register</h1>
+      <h1 className="text-2xl font-bold mb-4">Login</h1>
       <div className="mb-4">
         <label className="block text-gray-700">Email Address: </label>
         <input
@@ -45,7 +45,7 @@ export default () => {
       </div>
       {errors}
       <button className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-700">
-        Register
+        Login
       </button>
     </form>
   );

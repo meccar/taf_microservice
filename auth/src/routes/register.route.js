@@ -1,6 +1,6 @@
 const express = require("express");
 
-const Validation = require("../utils/validation");
+const Validation = require("@tafvn/common");
 const RegisterController = require("../controllers/register.controller");
 const registerValidation = require("../models/register.model");
 
