@@ -1,7 +1,6 @@
 const express = require("express");
 
-const Validation = require("../utils/validation");
-const Verify = require("../middlewares/verify.middleware");
+const { Validation, Verify } = require("@tafvn/common");
 const LoginValidation = require("../models/login.model");
 const LoginController = require("../controllers/login.controller");
 

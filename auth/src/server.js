@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const Config = require("./config/config");
+const Config = require("./config");
 const app = require("./index");
 
 const url = Config.MONGODB.replace("<password>", Config.MONGODB_PASSWORD);
