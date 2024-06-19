@@ -1,5 +1,6 @@
-const { catchAsync, CreateToken } = require("@tafvn/common");
+const { catchAsync } = require("@tafvn/common");
 const User = require("../models/user.model");
+const CreateToken = require("./auth.controller");
 
 const RegisterController = catchAsync(async (req, res) => {
   const user = await User.create({
