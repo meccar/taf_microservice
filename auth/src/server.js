@@ -1,13 +1,15 @@
 const mongoose = require("mongoose");
 
-const Config = require("./config");
 const app = require("./index");
 
-const url = Config.MONGODB.replace("<password>", Config.MONGODB_PASSWORD);
+const url = process.env.MONGODB.replace(
+  "<password>",
+  process.env.MONGODB_PASSWORD,
+);
 
 // eslint-disable-next-line no-console
 mongoose.connect(url).then(() => console.log("Connected to MongoDB"));
 
-app.listen(Config.PORT, () => {
-  console.log(`Listening on port ${Config.PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Listening on port ${process.env.PORT}`);
 });

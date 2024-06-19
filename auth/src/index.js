@@ -2,21 +2,23 @@ const express = require("express");
 const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
+const dotenv = require("dotenv");
 
 // const currentUserRoute = require("./routes/currentUser.route");
 const registerRoute = require("./routes/register.route");
 const loginRoute = require("./routes/login.route");
 const userRoute = require("./routes/user.route");
 const logoutRoute = require("./routes/logout.route");
-const Config = require("./config");
-const ErrorHandler = require("@tafvn/common");
+const { ErrorHandler } = require("@tafvn/common");
 
 const app = express();
+const env = process.env.NODE_ENV || "development";
+dotenv.config({ path: `.env.${env}` });
 
 app.set("trust proxy", true);
 
 // Development logging
-if (Config.NODE_ENV === "development") {
+if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
@@ -26,7 +28,7 @@ app.use(express.json({ limit: "10kb" }));
 app.use(
   cookieSession({
     signed: false,
-    secure: Config.NODE_ENV !== "development",
+    secure: process.env.NODE_ENV !== "development",
   }),
 );
 

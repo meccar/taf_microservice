@@ -1,4 +1,4 @@
-const loadEnv = require("@tafvn/common");
+const { loadEnv } = require("@tafvn/common");
 
 const Config = loadEnv("auth");
 
