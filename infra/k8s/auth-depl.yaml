@@ -16,12 +16,43 @@ spec:
         - name: auth
           # image: meccar/auth:latest (local)
           image: us.gcr.io/taf-dev-425515/auth:latest
+          # envFrom:
+          #   configMapRef:
+          #     name: auth-config
+          #   secretKeyRef:
+          #     name: auth-secrets
           env:
+            - name: NODE_ENV
+              value: "development"
+            - name: MONGODB_URI
+              value: "mongodb+srv://taf-auth:<password>@tafauth.0q4qdv6.mongodb.net/?retryWrites=true&w=majority&appName=tafAuth"
+            - name: MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: cXdlcnR5MTIzNDU2
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
                   name: jwt-secret
-                  key: JWT_KEY
+                  key: <base64_encoded_jwt_key>
+# ---
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: auth-config
+# data:
+#   NODE_ENV: development
+#   MONGODB_URI: mongodb+srv://taf-auth:<password>@tafauth.0q4qdv6.mongodb.net/?retryWrites=true&w=majority&appName=tafAuth     
+# ---
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: auth-secrets
+# type: Opaque
+# data:
+#   MONGODB_PASSWORD: cXdlcnR5MTIzNDU2  # base64 encoded 'qwerty123456'
+#   JWT_KEY: <base64_encoded_jwt_key>
 ---
 apiVersion: v1
 kind: Service
@@ -36,3 +67,4 @@ spec:
       protocol: TCP
       port: 8001
       targetPort: 8001
+

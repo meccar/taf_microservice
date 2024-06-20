@@ -3,15 +3,16 @@ const express = require("express");
 const router = express.Router({ mergeParams: true });
 
 const ProductController = require("../controllers/product.controller");
+const { VerifyToken } = require("@tafvn/common");
 
 router
   .route("/")
   .get(ProductController.GetAllProducts)
-  .post(ProductController.CreateProduct);
+  .post(VerifyToken, ProductController.CreateProduct);
 router
   .route("/:id")
   .get(ProductController.GetProduct)
-  .patch(ProductController.UpdateProduct)
-  .delete(ProductController.DeleteProduct);
+  .patch(VerifyToken, ProductController.UpdateProduct)
+  .delete(VerifyToken, ProductController.DeleteProduct);
 
 module.exports = router;

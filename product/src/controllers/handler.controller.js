@@ -1,8 +1,10 @@
-const catchAsync = require("../utils/catchAsync");
-const AppError = require("../utils/appError");
-const APIFeatures = require("../utils/apiFeatures");
+// const catchAsync = require("../utils/catchAsync");
+// const AppError = require("../utils/appError");
+// const APIFeatures = require("../utils/apiFeatures");
 const PublishMessage = require("../config/messages");
 const { CUSTOMER_BINDING_KEY } = require("../config/config");
+
+const { catchAsync, AppError, APIFeatures } = require("@tafvn/common");
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
