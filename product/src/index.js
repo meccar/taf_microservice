@@ -8,7 +8,7 @@ const cors = require("cors");
 
 const productRoute = require("./routes/product.route");
 const Config = require("./config/config");
-const catchAsync = require("./utils/catchAsync");
+const { catchAsync } = require("@tafvn/common");
 const { CreateChannel } = require("./config/messages");
 
 const ErrorHandler = require("./controllers/error.controller");
