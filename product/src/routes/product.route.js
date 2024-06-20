@@ -2,8 +2,8 @@ const express = require("express");
 
 const router = express.Router({ mergeParams: true });
 
-const ProductController = require("../controllers/product.controller");
 const { VerifyToken } = require("@tafvn/common");
+const ProductController = require("../controllers/product.controller");
 
 router
   .route("/")
