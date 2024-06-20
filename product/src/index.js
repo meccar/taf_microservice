@@ -6,9 +6,9 @@ const cookieSession = require("cookie-session");
 
 const cors = require("cors");
 
+const { catchAsync } = require("@tafvn/common");
 const productRoute = require("./routes/product.route");
 const Config = require("./config/config");
-const { catchAsync } = require("@tafvn/common");
 const { CreateChannel } = require("./config/messages");
 
 const ErrorHandler = require("./controllers/error.controller");
