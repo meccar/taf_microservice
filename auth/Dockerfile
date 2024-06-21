@@ -2,7 +2,7 @@ FROM node:lts-alpine
 
 WORKDIR /app/auth
 
-COPY package.json .
+COPY package*.json .
 
 RUN npm install --omit=dev
 

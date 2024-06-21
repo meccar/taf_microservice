@@ -30,29 +30,28 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: mongodb-secret
-                  key: cXdlcnR5MTIzNDU2
+                  key: mongodb-password
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
                   name: jwt-secret
-                  key: <base64_encoded_jwt_key>
-# ---
-# apiVersion: v1
-# kind: ConfigMap
-# metadata:
-#   name: auth-config
-# data:
-#   NODE_ENV: development
-#   MONGODB_URI: mongodb+srv://taf-auth:<password>@tafauth.0q4qdv6.mongodb.net/?retryWrites=true&w=majority&appName=tafAuth     
-# ---
-# apiVersion: v1
-# kind: Secret
-# metadata:
-#   name: auth-secrets
-# type: Opaque
-# data:
-#   MONGODB_PASSWORD: cXdlcnR5MTIzNDU2  # base64 encoded 'qwerty123456'
-#   JWT_KEY: <base64_encoded_jwt_key>
+                  key: jwt-key
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongodb-secret
+type: Opaque
+data:
+  mongodb-password: cXdlcnR5MTIzNDU2
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: jwt-secret
+type: Opaque
+data:
+  jwt-key: eW91cl9hY3R1YWxfand0X2tleV9oZXJl
 ---
 apiVersion: v1
 kind: Service
@@ -67,4 +66,3 @@ spec:
       protocol: TCP
       port: 8001
       targetPort: 8001
-

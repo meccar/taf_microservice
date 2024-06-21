@@ -1,15 +1,21 @@
 apiVersion: skaffold/v4beta11
 kind: Config
-metadata:
-  name: nats-depl
-manifests:
-  rawYaml:
-    - ./infra/k8s/*
-    - ./infra/k8s-dev/*
+# manifests:
+#   rawYaml:
+#     - ./infra/k8s/*
+#     - ./infra/k8s-dev/*
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+      - ./infra/k8s-dev/*
 build:
-  googleCloudBuild:
-    projectId: taf-dev-425515
+  local:
+    push: false
+  # googleCloudBuild:
+  #   projectId: taf-dev-425515
   artifacts:
+    # - image: meccar/product (local)
     - image: us.gcr.io/taf-dev-425515/product
       context: product
       docker:
@@ -18,6 +24,7 @@ build:
         manual:
           - src: "src/**/*.js"
             dest: .
+    # - image: meccar/auth (local)
     - image: us.gcr.io/taf-dev-425515/auth
       context: auth
       docker:
@@ -26,6 +33,7 @@ build:
         manual:
           - src: "src/**/*.js"
             dest: .
+    # - image: meccar/client (local)
     - image: us.gcr.io/taf-dev-425515/client
       context: client
       docker:
