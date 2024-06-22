@@ -7,17 +7,17 @@ const stan = nats.connect("taf", "abc", {
   // maxPingOut: 5,
 });
 
-// stan.on("error", (err) => {
-//   console.error("NATS connection error:", err);
-// });
+stan.on("error", (err) => {
+  console.error("NATS connection error:", err);
+});
 
-// stan.on("disconnect", () => {
-//   console.warn("NATS connection disconnected");
-// });
+stan.on("disconnect", () => {
+  console.warn("NATS connection disconnected");
+});
 
-// stan.on("reconnecting", () => {
-//   console.info("NATS client reconnecting");
-// });
+stan.on("reconnecting", () => {
+  console.info("NATS client reconnecting");
+});
 
 stan.on("connect", () => {
   console.log("Publisher connected to NATS");
@@ -33,10 +33,10 @@ stan.on("connect", () => {
   });
 });
 
-// stan.on("close", () => {
-//   console.warn("NATS connection closed");
-// });
+stan.on("close", () => {
+  console.warn("NATS connection closed");
+});
 
-// stan.on("connection_lost", (err) => {
-//   console.error("NATS connection lost:", err);
-// });
+stan.on("connection_lost", (err) => {
+  console.error("NATS connection lost:", err);
+});
