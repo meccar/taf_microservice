@@ -1,7 +1,7 @@
 apiVersion: skaffold/v4beta11
 kind: Config
 metadata:
-  name: nats-depl
+  name: skaffold
 manifests:
   rawYaml:
     - ./infra/k8s/*

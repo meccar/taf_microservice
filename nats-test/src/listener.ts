@@ -4,14 +4,19 @@ const stan = nats.connect("taf", randomBytes(4).toString("hex"), {
   url: "http://localhost:4222",
 });
 
-const options = stan.subscriptionOptions().setManualAckMode(true);
-
 stan.on("connect", () => {
   console.log("Listener connected to NATS");
 
+  stan.on("close", () => {
+    console.log("NATS connection closed");
+    process.exit();
+  });
+
+  const options = stan.subscriptionOptions().setManualAckMode(true);
   const substription = stan.subscribe(
     "taf:created",
-    "productServiceQueueGroup"
+    "productServiceQueueGroup",
+    options
   );
 
   substription.on("message", (msg: Message) => {
@@ -24,3 +29,7 @@ stan.on("connect", () => {
     msg.ack();
   });
 });
+
+process.on("SIGINT", () => stan.close());
+
+process.on("SIGTERM", () => stan.close());
