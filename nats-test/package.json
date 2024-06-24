@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@tafvn/common": "^1.0.19",
     "@types/node": "^20.14.7",
     "node-nats-streaming": "^0.3.2",
     "ts-node-dev": "^2.0.0",
