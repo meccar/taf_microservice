@@ -1,8 +1,9 @@
 {
   "dependencies": {
-    "@tafvn/common": "^1.0.19",
     "@types/node": "^20.14.7",
+    "minimist": "^1.2.8",
     "node-nats-streaming": "^0.3.2",
+    "optimist": "^0.5.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.5.2"
   },
@@ -16,5 +17,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@tafvn/common": "^1.0.23"
+  }
 }
