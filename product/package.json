@@ -18,7 +18,6 @@
   "dependencies": {
     "@eslint/eslintrc": "^3.0.2",
     "@eslint/js": "^9.1.1",
-    "@tafvn/common": "^1.0.14",
     "@types/node": "^18.0.6",
     "amqplib": "^0.10.4",
     "cluster": "^0.7.7",
@@ -30,10 +29,12 @@
     "express-http-proxy": "^2.0.0",
     "helmet": "^7.1.0",
     "mongoose": "^8.4.0",
+    "node-nats-streaming": "^0.3.2",
     "nodemon": "^3.1.0",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "pm2": "^5.4.0",
+    "@tafvn/common": "^1.0.23",
     "proxy": "^2.1.1"
   },
   "devDependencies": {
