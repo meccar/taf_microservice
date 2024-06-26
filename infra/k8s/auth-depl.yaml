@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: auth-depl
+  labels:
+    app: auth
 spec:
   replicas: 1
   selector:
@@ -14,8 +16,8 @@ spec:
     spec:
       containers:
         - name: auth
-          # image: meccar/auth:latest (local)
-          image: us.gcr.io/taf-dev-425515/auth:latest
+          image: meccar/auth:latest
+          # image: us.gcr.io/taf-dev-425515/auth:latest
           # envFrom:
           #   configMapRef:
           #     name: auth-config

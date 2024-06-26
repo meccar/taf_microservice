@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: client
-          # image: meccar/client:latest (local)
-          image: us.gcr.io/taf-dev-425515/client:latest
+          image: meccar/client:latest
+          # image: us.gcr.io/taf-dev-425515/client
 ---
 apiVersion: v1
 kind: Service

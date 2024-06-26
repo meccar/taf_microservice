@@ -1,22 +1,19 @@
 apiVersion: skaffold/v4beta11
 kind: Config
-# manifests:
-#   rawYaml:
-#     - ./infra/k8s/*
-#     - ./infra/k8s-dev/*
-deploy:
-  kubectl:
-    manifests:
-      - ./infra/k8s/*
-      - ./infra/k8s-dev/*
+metadata:
+  name: skaffold
+manifests:
+  rawYaml:
+    - ./infra/k8s/*
+    - ./infra/k8s-dev/*
 build:
-  local:
-    push: false
   # googleCloudBuild:
   #   projectId: taf-dev-425515
+  local:
+    push: false
   artifacts:
-    # - image: meccar/product (local)
-    - image: us.gcr.io/taf-dev-425515/product
+    # - image: us.gcr.io/taf-dev-425515/product
+    - image: meccar/product
       context: product
       docker:
         dockerfile: Dockerfile
@@ -24,8 +21,8 @@ build:
         manual:
           - src: "src/**/*.js"
             dest: .
-    # - image: meccar/auth (local)
-    - image: us.gcr.io/taf-dev-425515/auth
+    # - image: us.gcr.io/taf-dev-425515/auth
+    - image: meccar/auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -33,8 +30,8 @@ build:
         manual:
           - src: "src/**/*.js"
             dest: .
-    # - image: meccar/client (local)
-    - image: us.gcr.io/taf-dev-425515/client
+    # - image: us.gcr.io/taf-dev-425515/client
+    - image: meccar/client
       context: client
       docker:
         dockerfile: Dockerfile
