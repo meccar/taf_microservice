@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: product-depl
+  labels:
+    app: product
 spec:
   replicas: 1
   selector:
@@ -14,7 +16,8 @@ spec:
     spec:
       containers:
         - name: product
-          image: us.gcr.io/taf-dev-425515/product:latest
+          # image: us.gcr.io/taf-dev-425515/product:latest
+          image: meccar/product:latest
           env:
             - name: NODE_ENV
               value: "development"
