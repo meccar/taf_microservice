@@ -27,7 +27,8 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: mongodb-secret
-                  key: cXdlcnR5MTIzNDU2
+                  key: mongodb-password
+
 ---
 apiVersion: v1
 kind: Service

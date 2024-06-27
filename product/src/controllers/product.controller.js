@@ -1,5 +1,6 @@
 // const catchAsync = require("../utils/catchAsync");
-const handler = require("@tafvn/common");
+// const handler = require("@tafvn/common");
+const handler = require("./handler.controller");
 const Product = require("../models/product.model");
 
 exports.CreateProduct = handler.createOne(Product);

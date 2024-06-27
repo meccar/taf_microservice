@@ -4,7 +4,7 @@ const app = require("./index");
 
 const url = process.env.MONGODB.replace(
   "<password>",
-  process.env.MONGODB_PASSWORD,
+  process.env.MONGODB_PASSWORD
 );
 
 // eslint-disable-next-line no-console
