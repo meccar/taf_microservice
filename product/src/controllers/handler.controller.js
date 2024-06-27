@@ -1,9 +1,11 @@
 // const catchAsync = require("../utils/catchAsync");
 // const AppError = require("../utils/appError");
 // const APIFeatures = require("../utils/apiFeatures");
+// const PublishMessage = require("../config/messages");
+// const { CUSTOMER_BINDING_KEY } = require("../config/config");
 const { catchAsync, AppError, APIFeatures } = require("@tafvn/common");
-const PublishMessage = require("../config/messages");
-const { CUSTOMER_BINDING_KEY } = require("../config/config");
+const ProductCreatedPublisher = require("../events/publishers/product-created-publisher");
+const { natsWrapper } = require("../nats-wrapper");
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
@@ -13,7 +15,7 @@ exports.deleteOne = (Model) =>
       return next(new AppError("No document found with that ID", 404));
     }
 
-    PublishMessage(req.channel, CUSTOMER_BINDING_KEY, JSON.stringify(doc));
+    // PublishMessage(req.channel, CUSTOMER_BINDING_KEY, JSON.stringify(doc));
 
     return res.status(204).json({
       status: "success",
@@ -32,7 +34,7 @@ exports.updateOne = (Model) =>
       return next(new AppError("No document found with that ID", 404));
     }
 
-    PublishMessage(req.channel, CUSTOMER_BINDING_KEY, JSON.stringify(doc));
+    // PublishMessage(req.channel, CUSTOMER_BINDING_KEY, JSON.stringify(doc));
 
     return res.status(200).json({
       status: "success",
@@ -50,7 +52,8 @@ exports.createOne = (Model) =>
       return next(new AppError("No document found with that ID", 404));
     }
 
-    PublishMessage(req.channel, CUSTOMER_BINDING_KEY, JSON.stringify(doc));
+    await new ProductCreatedPublisher(natsWrapper.client).publish(doc);
+    // PublishMessage(req.channel, CUSTOMER_BINDING_KEY, JSON.stringify(doc));
 
     return res.status(201).json({
       status: "success",
@@ -71,7 +74,7 @@ exports.getOne = (Model, populateOptions) =>
       return next("No document found with that ID", 404);
     }
 
-    PublishMessage(req.channel, CUSTOMER_BINDING_KEY, JSON.stringify(doc));
+    // PublishMessage(req.channel, CUSTOMER_BINDING_KEY, JSON.stringify(doc));
 
     return res.status(200).json({
       status: "success",
@@ -99,7 +102,7 @@ exports.getAll = (Model) =>
       return next(new AppError("No document found with that ID", 404));
     }
 
-    PublishMessage(req.channel, CUSTOMER_BINDING_KEY, JSON.stringify(doc));
+    // PublishMessage(req.channel, CUSTOMER_BINDING_KEY, JSON.stringify(doc));
 
     return res.status(200).json({
       status: "success",

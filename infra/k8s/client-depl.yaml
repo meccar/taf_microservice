@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: meccar/client:latest
+          image: meccar/client
           # image: us.gcr.io/taf-dev-425515/client
 ---
 apiVersion: v1
@@ -24,6 +24,7 @@ metadata:
 spec:
   selector:
     app: client
+  type: ClusterIP
   ports:
     - name: client
       protocol: TCP
