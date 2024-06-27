@@ -12,9 +12,9 @@ module.exports = {
   // ...require("./utils/jwt"),
   ...require("./utils/validation"),
 
-  ...require("./dist/events/listener.event"),
-  ...require("./dist/events/publisher.event"),
-  ...require("./dist/events/product-created-event"),
-  ...require("./dist/events/product-updated-event"),
-  ...require("./dist/events/subject"),
+  ...require("../dist/events/listener.event"),
+  ...require("../dist/events/publisher.event"),
+  ...require("../dist/events/product-created-event"),
+  ...require("../dist/events/product-updated-event"),
+  ...require("../dist/events/subject"),
 };
