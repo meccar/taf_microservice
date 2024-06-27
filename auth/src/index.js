@@ -29,7 +29,7 @@ app.use(
   cookieSession({
     signed: false,
     secure: process.env.NODE_ENV !== "development",
-  }),
+  })
 );
 
 app.use("/api/v1/user/register", registerRoute);
