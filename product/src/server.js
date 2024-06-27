@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 const Config = require("./config/config");
 const app = require("./index");
-const natsWrapper = require("./nats-wrapper");
+const { natsWrapper } = require("./nats-wrapper");
 
 const url = Config.MONGODB.replace("<password>", Config.MONGODB_PASSWORD);
 
