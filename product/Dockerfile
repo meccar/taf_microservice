@@ -10,7 +10,7 @@ COPY package*.json .
 # RUN npm run install-client --omit=dev
 
 # COPY ./package*.json product/
-RUN npm install
+RUN npm install --omit=dev
 # RUN npm run install-product --omit=dev
 
 # COPY client/ client/

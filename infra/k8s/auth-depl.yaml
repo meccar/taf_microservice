@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: meccar/auth:latest
+          image: meccar/auth
           # image: us.gcr.io/taf-dev-425515/auth:latest
           # envFrom:
           #   configMapRef:
