@@ -4,7 +4,8 @@
 // const PublishMessage = require("../config/messages");
 // const { CUSTOMER_BINDING_KEY } = require("../config/config");
 const { catchAsync, AppError, APIFeatures } = require("@tafvn/common");
-const ProductCreatedPublisher = require("../events/publishers/product-created-publisher");
+const ProductCreatedPublisher = require("../events/publishers/product.created.publisher");
+const ProductUpdatedPublisher = require("../events/publishers/product.updated.publisher");
 const { natsWrapper } = require("../nats-wrapper");
 
 exports.deleteOne = (Model) =>
@@ -34,6 +35,7 @@ exports.updateOne = (Model) =>
       return next(new AppError("No document found with that ID", 404));
     }
 
+    await new ProductUpdatedPublisher(natsWrapper.client).publish(doc);
     // PublishMessage(req.channel, CUSTOMER_BINDING_KEY, JSON.stringify(doc));
 
     return res.status(200).json({

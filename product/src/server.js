@@ -5,13 +5,20 @@ const Config = require("./config/config");
 const app = require("./index");
 const { natsWrapper } = require("./nats-wrapper");
 
-const url = Config.MONGODB.replace("<password>", Config.MONGODB_PASSWORD);
+const url = process.env.MONGODB.replace(
+  "<password>",
+  process.env.MONGODB_PASSWORD,
+);
 
 /* eslint-disable no-console */
 /* eslint-disable no-process-exit */
 async function start() {
   try {
-    await natsWrapper.connect("taf", "rwefsd", "http://nats-srv:4222");
+    await natsWrapper.connect(
+      process.env.NATS_CLUSTER_ID,
+      process.env.NATS_CLIENT_ID,
+      process.env.NATS_URL,
+    );
     natsWrapper.client.on("close", () => {
       console.log("NATS connection closed!");
       process.exit();
@@ -28,7 +35,7 @@ async function start() {
           key: Config.key,
           cert: Config.cert,
         },
-        app
+        app,
       )
       .listen(Config.PORT, () => {
         console.log(`Server is listening on ${Config.PORT}`);

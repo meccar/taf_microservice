@@ -17,10 +17,18 @@ spec:
           # image: us.gcr.io/taf-dev-425515/product:latest
           image: meccar/product:latest
           env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: "http://nats-srv:4222"
+            - name: NATS_CLUSTER_ID
+              value: "taf"
             - name: NODE_ENV
               value: "development"
             - name: MONGODB_URI
-              value: "mongodb+srv://taf:<password>@atlascluster.wetplea.mongodb.net/"
+              value: "mongodb+srv://taf:<password>@tafproduct.ltqtkjz.mongodb.net/?retryWrites=true&w=majority&appName=tafProduct"
             - name: MONGODB_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -41,3 +49,11 @@ spec:
       protocol: TCP
       port: 8003
       targetPort: 8003
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongodb-secret
+type: Opaque
+data:
+  mongodb-password: 1uVbtlEQRyxNs5t4
