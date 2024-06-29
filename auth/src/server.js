@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const app = require("./index");
 
-const url = process.env.MONGODB.replace(
+const url = process.env.MONGODB_URI.replace(
   "<password>",
   process.env.MONGODB_PASSWORD
 );

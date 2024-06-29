@@ -28,13 +28,12 @@ spec:
             - name: NODE_ENV
               value: "development"
             - name: MONGODB_URI
-              value: "mongodb+srv://taf:<password>@tafproduct.ltqtkjz.mongodb.net/?retryWrites=true&w=majority&appName=tafProduct"
+              value: "mongodb+srv://tafProduct:<password>@tafproduct.ltqtkjz.mongodb.net/?retryWrites=true&w=majority&appName=tafProduct"
             - name: MONGODB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: mongodb-secret
                   key: mongodb-password
-
 ---
 apiVersion: v1
 kind: Service
@@ -56,4 +55,4 @@ metadata:
   name: mongodb-secret
 type: Opaque
 data:
-  mongodb-password: 1uVbtlEQRyxNs5t4
+  mongodb-password: MXVWYnRsRVFSeXhOczV0NA==
