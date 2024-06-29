@@ -7,7 +7,7 @@ const { natsWrapper } = require("./nats-wrapper");
 
 const url = process.env.MONGODB.replace(
   "<password>",
-  process.env.MONGODB_PASSWORD,
+  process.env.MONGODB_PASSWORD
 );
 
 /* eslint-disable no-console */
@@ -17,7 +17,7 @@ async function start() {
     await natsWrapper.connect(
       process.env.NATS_CLUSTER_ID,
       process.env.NATS_CLIENT_ID,
-      process.env.NATS_URL,
+      process.env.NATS_URL
     );
     natsWrapper.client.on("close", () => {
       console.log("NATS connection closed!");
@@ -35,7 +35,7 @@ async function start() {
           key: Config.key,
           cert: Config.cert,
         },
-        app,
+        app
       )
       .listen(Config.PORT, () => {
         console.log(`Server is listening on ${Config.PORT}`);
