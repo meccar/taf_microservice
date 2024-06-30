@@ -29,8 +29,8 @@ spec:
             - name: MONGODB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mongodb-secret
-                  key: mongodb-password
+                  name: auth-mongodb-secret
+                  key: auth-mongodb-password
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
@@ -40,10 +40,10 @@ spec:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: mongodb-secret
+  name: auth-mongodb-secret
 type: Opaque
 data:
-  mongodb-password: OTJjbWN5VFE4V2REamVTTQ==
+  auth-mongodb-password: VGhyZ2d1SGV5azBVR2JRTg==
 ---
 apiVersion: v1
 kind: Secret

@@ -16,7 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tafvn/common": "^1.0.29",
+    "@tafvn/common": "^1.0.30",
     "@types/node": "^18.0.6",
     "amqplib": "^0.10.4",
     "cluster": "^0.7.7",

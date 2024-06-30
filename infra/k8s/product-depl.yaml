@@ -32,8 +32,8 @@ spec:
             - name: MONGODB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mongodb-secret
-                  key: mongodb-password
+                  name: product-mongodb-secret
+                  key: product-mongodb-password
 ---
 apiVersion: v1
 kind: Service
@@ -52,7 +52,7 @@ spec:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: mongodb-secret
+  name: product-mongodb-secret
 type: Opaque
 data:
-  mongodb-password: MXVWYnRsRVFSeXhOczV0NA==
+  product-mongodb-password: MXVWYnRsRVFSeXhOczV0NA==

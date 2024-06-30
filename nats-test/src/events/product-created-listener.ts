@@ -1,8 +1,5 @@
 import { Message } from "node-nats-streaming";
-import { Listener, ProductCreatedEvent, Subjects } from "@tafvn/common";
-// import { Listener } from "./listener.event";
-// import { ProductCreatedEvent } from "./product-created-event";
-// import { Subjects } from "./subjects";
+import { Listener, ProductCreatedEvent, Subjects } from "@tafvn/common-events";
 
 export class ProductCreatedListener extends Listener<ProductCreatedEvent> {
   readonly subject = Subjects.ProductCreated;
