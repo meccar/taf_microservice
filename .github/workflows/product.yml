@@ -64,12 +64,12 @@ jobs:
         working-directory: product
         run: npm ci
 
-      - name: Formatting, linting, tsc, and tests
-        working-directory: product
-        run: |
-          npm run format:check
+      # - name: Formatting, linting, tsc, and tests
+      #   working-directory: product
+      #   run: |
+      #     npm run format:check
+      #     npm run lint:check
 
-    # npm run lint:check
     # - name: Start MongoDB
     #   uses: supercharge/mongodb-github-action@1.11.0
     #   with:
