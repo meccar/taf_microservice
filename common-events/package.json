@@ -1,0 +1,26 @@
+{
+  "name": "@tafvn/common-events",
+  "version": "1.0.3",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "files": [
+    "./src/**/*"
+  ],
+  "scripts": {
+    "clean": "del ./*",
+    "pub": "git add . && git commit -m \"Updates\" && npm version patch && npm publish"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "del-cli": "^5.1.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.5.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": ""
+}

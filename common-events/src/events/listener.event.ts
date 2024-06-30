@@ -1,5 +1,5 @@
 import { Message, Stan } from "node-nats-streaming";
-import { Subjects } from "./subjects";
+import { Subjects } from "./subject";
 
 interface Event {
   subject: Subjects;
@@ -30,7 +30,7 @@ export abstract class Listener<T extends Event> {
     const subscription = this.client.subscribe(
       this.subject,
       this.queueGroupName,
-      this.subcriptionOptions()
+      this.subcriptionOptions(),
     );
 
     subscription.on("message", (msg: Message) => {

@@ -17,4 +17,5 @@ module.exports = {
   ...require("./dist/events/product-created-event"),
   ...require("./dist/events/product-updated-event"),
   ...require("./dist/events/subject"),
+  ...require("./dist/events/types/order.status"),
 };

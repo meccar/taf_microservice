@@ -1,4 +1,4 @@
-import { Subjects } from "./subjects";
+import { Subjects } from "./subject";
 
 export interface ProductCreatedEvent {
   subject: Subjects.ProductCreated;
