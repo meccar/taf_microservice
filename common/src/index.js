@@ -9,7 +9,7 @@ module.exports = {
   ...require("./utils/apiFeatures"),
   ...require("./utils/appError"),
   ...require("./utils/catchAsync"),
-  // ...require("./utils/jwt"),
+  ...require("./utils/natsWrapper"),
   ...require("./utils/validation"),
 
   ...require("./dist/events/listener.event"),

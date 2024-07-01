@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
-// const ProductCreatedPublisher = require("../events/publishers/product-created-publisher");
-// const natsWrapper = require("../nats-wrapper");
+
+const ProductCreatedPublisher = require("../events/publishers/product-created-publisher");
+const ProductUpdatedPublisher = require("../events/publishers/product.updated.publisher");
+const natsWrapper = require("../nats-wrapper");
 
 const {
   Types: { ObjectId },
@@ -38,13 +40,25 @@ const ProductSchema = new mongoose.Schema({
 //   next();
 // });
 
-// ProductSchema.post("save", function onProductSave() {
-//   new ProductCreatedPublisher(natsWrapper.client).publish({
-//     id: this.id,
-//     title: this.title,
-//     price: this.price,
-//   });
-// });
+ProductSchema.post("save", function (doc) {
+  if (doc) {
+    new ProductCreatedPublisher(natsWrapper.client).publish({
+      id: this.id,
+      title: this.title,
+      price: this.price,
+    });
+  }
+});
+
+ProductSchema.post("findByIdAndUpdate", function (doc) {
+  if (doc) {
+    new ProductUpdatedPublisher(natsWrapper.client).publish({
+      id: doc._id,
+      title: doc.title,
+      price: doc.price,
+    });
+  }
+});
 
 const Product = mongoose.model("products", ProductSchema);
 module.exports = Product;
