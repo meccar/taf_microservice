@@ -38,13 +38,13 @@ async function start() {
     https
       .createServer(
         {
-          key: Config.key,
-          cert: Config.cert,
+          key: process.env.key,
+          cert: process.env.cert,
         },
         app
       )
-      .listen(Config.PORT, () => {
-        console.log(`Server is listening on ${Config.PORT}`);
+      .listen(process.env.PORT, () => {
+        console.log(`Server is listening on ${process.env.PORT}`);
       });
   } catch (err) {
     // Log any errors that occur during startup

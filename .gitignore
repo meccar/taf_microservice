@@ -1,5 +1,8 @@
 # Ignore infra directory
 infra/
+.ps1
+Makefile
+.txt
 
 # Logs
 logs

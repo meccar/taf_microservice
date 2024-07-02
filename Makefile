@@ -9,6 +9,9 @@ PRIVATE_KEY = $(KEY_DIR)/secr.pem
 # Public key file
 PUBLIC_KEY = $(KEY_DIR)/pub.pem
 
+# Secret YAML file
+SECRET_YAML = ./infra/k8s/jwt-secret.yaml
+
 config-win:
 	@powershell -Command "if ((Get-Service -Name 'com.docker.service').Status -ne 'Running') { Start-Service -Name 'com.docker.service' }"
 	@powershell -Command "Start-Process -FilePath 'C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe'; Start-Sleep -Seconds 30"
@@ -28,3 +31,14 @@ $(PRIVATE_KEY):
 # Rule to generate the public key
 $(PUBLIC_KEY): $(PRIVATE_KEY)
 	openssl rsa -in $(PRIVATE_KEY) -pubout -out $(PUBLIC_KEY)
+
+encode-keys: $(PRIVATE_KEY) $(PUBLIC_KEY)
+	powershell -ExecutionPolicy Bypass -File encodeSecr.ps1
+
+# Clean up generated files
+clean:
+	@powershell -Command "if (Test-Path $(PRIVATE_KEY)) { Remove-Item -Force $(PRIVATE_KEY) }"
+	@powershell -Command "if (Test-Path $(PUBLIC_KEY)) { Remove-Item -Force $(PUBLIC_KEY) }"
+	@powershell -Command "if (Test-Path $(SECRET_YAML)) { Remove-Item -Force $(SECRET_YAML) }"	
+	@powershell -Command "if (Test-Path encoded_private_key.txt) { Remove-Item -Force encoded_private_key.txt }"	
+	@powershell -Command "if (Test-Path encoded_pub_key.txt) { Remove-Item -Force encoded_pub_key.txt }"	
