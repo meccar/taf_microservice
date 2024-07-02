@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const ProductCreatedPublisher = require("../events/publishers/product-created-publisher");
+const ProductCreatedPublisher = require("../events/publishers/product.created.publisher");
 const ProductUpdatedPublisher = require("../events/publishers/product.updated.publisher");
 const natsWrapper = require("../nats-wrapper");
 
@@ -40,7 +40,7 @@ const ProductSchema = new mongoose.Schema({
 //   next();
 // });
 
-ProductSchema.post("save", function (doc) {
+ProductSchema.post("save", (doc) => {
   if (doc) {
     new ProductCreatedPublisher(natsWrapper.client).publish({
       id: this.id,
@@ -50,10 +50,10 @@ ProductSchema.post("save", function (doc) {
   }
 });
 
-ProductSchema.post("findByIdAndUpdate", function (doc) {
+ProductSchema.post("findByIdAndUpdate", (doc) => {
   if (doc) {
     new ProductUpdatedPublisher(natsWrapper.client).publish({
-      id: doc._id,
+      id: doc.id,
       title: doc.title,
       price: doc.price,
     });

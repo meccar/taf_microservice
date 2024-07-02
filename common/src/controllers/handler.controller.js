@@ -1,12 +1,6 @@
-// const catchAsync = require("../utils/catchAsync");
-// const AppError = require("../utils/appError");
-// const APIFeatures = require("../utils/apiFeatures");
-// const PublishMessage = require("../config/messages");
-// const { CUSTOMER_BINDING_KEY } = require("../config/config");
-const { catchAsync, AppError, APIFeatures } = require("@tafvn/common");
-const ProductCreatedPublisher = require("../events/publishers/product.created.publisher");
-const ProductUpdatedPublisher = require("../events/publishers/product.updated.publisher");
-const { natsWrapper } = require("../nats-wrapper");
+const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
+const APIFeatures = require("../utils/apiFeatures");
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
@@ -15,8 +9,6 @@ exports.deleteOne = (Model) =>
     if (!doc) {
       return next(new AppError("No document found with that ID", 404));
     }
-
-    // PublishMessage(req.channel, CUSTOMER_BINDING_KEY, JSON.stringify(doc));
 
     return res.status(204).json({
       status: "success",
@@ -35,9 +27,6 @@ exports.updateOne = (Model) =>
       return next(new AppError("No document found with that ID", 404));
     }
 
-    await new ProductUpdatedPublisher(natsWrapper.client).publish(doc);
-    // PublishMessage(req.channel, CUSTOMER_BINDING_KEY, JSON.stringify(doc));
-
     return res.status(200).json({
       status: "success",
       data: {
@@ -53,9 +42,6 @@ exports.createOne = (Model) =>
     if (!doc) {
       return next(new AppError("No document found with that ID", 404));
     }
-
-    await new ProductCreatedPublisher(natsWrapper.client).publish(doc);
-    // PublishMessage(req.channel, CUSTOMER_BINDING_KEY, JSON.stringify(doc));
 
     return res.status(201).json({
       status: "success",
@@ -76,8 +62,6 @@ exports.getOne = (Model, populateOptions) =>
       return next("No document found with that ID", 404);
     }
 
-    // PublishMessage(req.channel, CUSTOMER_BINDING_KEY, JSON.stringify(doc));
-
     return res.status(200).json({
       status: "success",
       data: {
@@ -88,11 +72,11 @@ exports.getOne = (Model, populateOptions) =>
 
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
-    let filter = {};
+    // let filter = {};
     // if (req.params.postID) filter = { post : req.params.postID }
-    if (req.params.communityID) filter = { community: req.params.communityID };
+    // if (req.params.communityID) filter = { community: req.params.communityID };
 
-    const features = new APIFeatures(Model.find(filter), req.query)
+    const features = new APIFeatures(Model.find(req.filter), req.query)
       .filter()
       .sort()
       .limitFields()
@@ -103,8 +87,6 @@ exports.getAll = (Model) =>
     if (!doc) {
       return next(new AppError("No document found with that ID", 404));
     }
-
-    // PublishMessage(req.channel, CUSTOMER_BINDING_KEY, JSON.stringify(doc));
 
     return res.status(200).json({
       status: "success",

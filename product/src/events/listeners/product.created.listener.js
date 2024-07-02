@@ -7,20 +7,19 @@
 //     queueGroupName = "product-service"
 
 //     onMessage(data: ProductCreatedEvent["data"], msg: Message) {}
-// } 
-
+// }
 
 const { Message } = require("node-nats-streaming");
 const { Subjects, Listener, ProductCreatedEvent } = require("@tafvn/common");
 const Product = require("../../models/product.model");
 
 class ProductCreatedListener extends Listener {
-    subject = Subjects.ProductCreated;
-    queueGroupName = "product-service";
+  subject = Subjects.ProductCreated;
+  queueGroupName = "product-service";
 
-    onMessage(data, msg) {
-        // Handle the message
-    }
+  onMessage(data, msg) {
+    // Handle the message
+  }
 }
 
 module.exports = ProductCreatedListener;

@@ -2,6 +2,7 @@ module.exports = {
   ...require("./config/config"),
 
   ...require("./controllers/error.controller"),
+  ...require("./controllers/handler.controller"),
 
   ...require("./middlewares/auth.middleware"),
   ...require("./middlewares/verify.middleware"),
