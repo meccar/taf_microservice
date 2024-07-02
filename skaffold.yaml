@@ -41,5 +41,14 @@ build:
         manual:
           - src: "**/*.js"
             dest: .
+    # - image: us.gcr.io/taf-dev-425515/client
+    - image: meccar/order
+      context: order
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
   tagPolicy:
     gitCommit: {}

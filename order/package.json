@@ -4,20 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon src/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tafvn/common": "^1.0.30",
+    "@tafvn/common": "^1.0.33",
     "body-parser": "^1.20.2",
     "cookie-session": "^2.1.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "helmet": "^7.1.0",
     "minimist": "^1.2.8",
     "mongoose": "^8.4.4",
     "morgan": "^1.10.0",
-    "optimist": "^0.5.2"
+    "nodemon": "^3.1.4",
+    "optimist": "^0.5.2",
+    "proxy": "^2.2.0"
   }
 }
