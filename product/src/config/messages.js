@@ -1,5 +1,5 @@
 const amqplib = require("amqplib");
-const catchAsync = require("../utils/catchAsync");
+const catchAsync = require("@tafvn/common");
 const Config = require("./config");
 
 // create a channel
