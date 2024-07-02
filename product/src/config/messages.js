@@ -1,12 +1,11 @@
 const amqplib = require("amqplib");
-const catchAsync = require("@tafvn/common");
-const Config = require("./config");
+const { catchAsync } = require("@tafvn/common");
 
 // create a channel
 exports.CreateChannel = catchAsync(async () => {
-  const connection = await amqplib.connect(Config.MESSAGE_BROKER_URL);
+  const connection = await amqplib.connect(process.env.MESSAGE_BROKER_URL);
   const channel = await connection.createChannel();
-  await channel.assertExchange(Config.EXCHANGE_NAME, "direct", {
+  await channel.assertExchange(process.env.EXCHANGE_NAME, "direct", {
     durable: false,
   });
   return channel;
@@ -14,13 +13,17 @@ exports.CreateChannel = catchAsync(async () => {
 
 // publish messages
 exports.PublishMessage = catchAsync(async (channel, bindingKey, message) => {
-  await channel.publish(Config.EXCHANGE_NAME, bindingKey, Buffer.from(message));
+  await channel.publish(
+    process.env.EXCHANGE_NAME,
+    bindingKey,
+    Buffer.from(message)
+  );
 });
 
 // subcribe messages
 exports.SubcribeMessage = catchAsync(async (channel, service, bindingKey) => {
   const appQueue = await channel.assertQueue("QUEUE_NAME");
-  channel.bindQueue(appQueue.queue, Config.EXCHANGE_NAME, bindingKey);
+  channel.bindQueue(appQueue.queue, process.env.EXCHANGE_NAME, bindingKey);
   channel.consume(appQueue.queue, (data) => {
     // console.log("==> Received data");
     // console.log(data.content.toString());

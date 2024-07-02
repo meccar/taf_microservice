@@ -1,6 +1,3 @@
-// const catchAsync = require("../utils/catchAsync");
-// const handler = require("@tafvn/common");
-// const handler = require("./handler.controller");
 const handler = require("@tafvn/common");
 const Product = require("../models/product.model");
 
