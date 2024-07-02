@@ -31,11 +31,16 @@ spec:
                 secretKeyRef:
                   name: auth-mongodb-secret
                   key: auth-mongodb-password
-            - name: JWT_KEY
+            - name: SECR_KEY
               valueFrom:
                 secretKeyRef:
                   name: jwt-secret
-                  key: jwt-key
+                  key: secr-key
+            - name: PUB_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-pub
+                  key: pub-key
 ---
 apiVersion: v1
 kind: Secret
@@ -44,14 +49,6 @@ metadata:
 type: Opaque
 data:
   auth-mongodb-password: VGhyZ2d1SGV5azBVR2JRTg==
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: jwt-secret
-type: Opaque
-data:
-  jwt-key: eW91cl9hY3R1YWxfand0X2tleV9oZXJl
 ---
 apiVersion: v1
 kind: Service
