@@ -18,8 +18,14 @@ config-win:
 	@powershell -Command "minikube start --profile docker-desktop"
 	@powershell -Command "skaffold config set --global local-cluster true"
 	@powershell -Command "& minikube -p docker-desktop docker-env | Invoke-Expression"
+
 run:
-	skaffold dev --auto-build --auto-sync --auto-deploy
+	skaffold dev --auto-build --auto-sync --auto-deploy; \
+	EXIT_STATUS=$$?; \
+	if [ $$EXIT_STATUS -eq 0 ] || [ $$EXIT_STATUS -eq 130 ]; then \
+		echo "Cleaning Secrets..."; \
+		$(MAKE) clean; \
+	fi
 
 # Generate the secret key
 secret-key: $(PRIVATE_KEY) $(PUBLIC_KEY)
@@ -32,11 +38,14 @@ $(PRIVATE_KEY):
 $(PUBLIC_KEY): $(PRIVATE_KEY)
 	openssl rsa -in $(PRIVATE_KEY) -pubout -out $(PUBLIC_KEY)
 
+	$(MAKE) encode-keys
+
 encode-keys: $(PRIVATE_KEY) $(PUBLIC_KEY)
 	powershell -ExecutionPolicy Bypass -File encodeSecr.ps1
 
 # Clean up generated files
 clean:
+	echo "Executing clean command"
 	@powershell -Command "if (Test-Path $(PRIVATE_KEY)) { Remove-Item -Force $(PRIVATE_KEY) }"
 	@powershell -Command "if (Test-Path $(PUBLIC_KEY)) { Remove-Item -Force $(PUBLIC_KEY) }"
 	@powershell -Command "if (Test-Path $(SECRET_YAML)) { Remove-Item -Force $(SECRET_YAML) }"	

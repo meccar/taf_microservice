@@ -9,6 +9,7 @@ const cors = require("cors");
 
 // Import routes and error handler
 const orderRoute = require("./routes/order.route");
+const {redisClient} = require("./utils/redis")
 const { ErrorHandler } = require("@tafvn/common");
 
 // Initialize express app
@@ -44,6 +45,8 @@ app.use(
     secure: process.env.NODE_ENV !== "development",
   })
 );
+
+await redisClient()
 
 // Set up order route
 app.use("/api/v1/user/order", orderRoute);
