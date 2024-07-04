@@ -1,5 +1,5 @@
 
-const redis = require("redis")
+const {createClient} = require("redis")
 const { catchAsync } = require("@tafvn/common");
 
 
@@ -9,11 +9,25 @@ const options = {
     EX: 21600,
 }
 
-const redisClient = async () => {
-    client = redis.createClient({url: process.env.REDIS_URI})
-    client.on("error", (error) => console.error(`Error : ${error}`));
-    await client.connect().then(() => console.log(`Connected to Redis!`));
-}
+const redisClient = catchAsync(async () => {
+    // const client = createClient({
+    //     username: 'default', // use your Redis user. More info https://redis.io/docs/latest/operate/oss_and_stack/management/security/acl/
+    //     password: 'secret', // use your password here
+    //     socket: {
+    //         host: 'my-redis.cloud.redislabs.com',
+    //         port: 6379,
+    //         tls: true,
+    //         key: readFileSync('./redis_user_private.key'),
+    //         cert: readFileSync('./redis_user.crt'),
+    //         ca: [readFileSync('./redis_ca.pem')]
+    //     }
+    // });
+    client = createClient({ url: process.env.REDIS_URI });
+    client.on("error", (error) => console.error(`Error: ${error}`));
+    await client        
+        .connect()
+        .then(() => console.log(`Connected to Redis!`));
+});
 
 function requestToKey(req) {
     const reqDataToHash = {
