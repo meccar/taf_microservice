@@ -16,7 +16,7 @@ exports.PublishMessage = catchAsync(async (channel, bindingKey, message) => {
   await channel.publish(
     process.env.EXCHANGE_NAME,
     bindingKey,
-    Buffer.from(message)
+    Buffer.from(message),
   );
 });
 

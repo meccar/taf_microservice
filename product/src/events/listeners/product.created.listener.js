@@ -15,6 +15,7 @@ const Product = require("../../models/product.model");
 
 class ProductCreatedListener extends Listener {
   subject = Subjects.ProductCreated;
+
   queueGroupName = "product-service";
 
   onMessage(data, msg) {
