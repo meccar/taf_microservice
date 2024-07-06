@@ -1,22 +1,20 @@
-const redis = require('redis');
+const redis = require("redis");
 
 class RedisManager {
-    constructor() {
-        this.client = null;
-    }
+  constructor() {
+    this.client = null;
+  }
 
   async connect(config) {
     this.client = redis.createClient(config);
-    this.client.on('error', (err) => console.error('Redis Client Error', err));
-    await this.client
-        .connect()
-        .then(() => console.log(`Connected to Redis!`));
+    this.client.on("error", (err) => console.error("Redis Client Error", err));
+    await this.client.connect().then(() => console.log(`Connected to Redis!`));
   }
 
   // Transaction handling
   async runTransaction(commands) {
     const multi = this.client.multi();
-    commands.forEach(cmd => multi[cmd.method](cmd.args));
+    commands.forEach((cmd) => multi[cmd.method](cmd.args));
     return await multi.exec();
   }
 
@@ -24,7 +22,7 @@ class RedisManager {
   async runLuaScript(script, keys, args) {
     return await this.client.eval(script, {
       keys: keys,
-      arguments: args
+      arguments: args,
     });
   }
 
@@ -41,27 +39,27 @@ class RedisManager {
 
   // Streams
   async addToStream(streamName, fields) {
-    return await this.client.xAdd(streamName, '*', fields);
+    return await this.client.xAdd(streamName, "*", fields);
   }
 
-  async readFromStream(streamName, id = '0-0') {
+  async readFromStream(streamName, id = "0-0") {
     return await this.client.xRead({
       key: streamName,
-      id: id
+      id: id,
     });
   }
 
   // Caching
   async cacheWithExpiry(key, value, expiryInSeconds) {
     return await this.client.set(key, value, {
-      EX: expiryInSeconds
+      EX: expiryInSeconds,
     });
   }
 
   // Pipelining
   async runPipeline(commands) {
     const pipeline = this.client.multi();
-    commands.forEach(cmd => pipeline[cmd.method](cmd.args));
+    commands.forEach((cmd) => pipeline[cmd.method](cmd.args));
     return await pipeline.exec();
   }
 
@@ -70,7 +68,7 @@ class RedisManager {
     return await this.client.geoAdd(key, { longitude, latitude, member });
   }
 
-  async getGeoDistance(key, member1, member2, unit = 'km') {
+  async getGeoDistance(key, member1, member2, unit = "km") {
     return await this.client.geoDist(key, member1, member2, unit);
   }
 
@@ -117,4 +115,4 @@ class RedisManager {
   }
 }
 
-module.exports = RedisManager
+module.exports = { RedisManager };
