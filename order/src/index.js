@@ -1,7 +1,6 @@
 // Import modules
 const express = require("express");
-const cookieSession = require("cookie-session");
-const bodyParser = require("body-parser");
+const session = require("express-session");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
@@ -9,8 +8,8 @@ const cors = require("cors");
 
 // Import routes and error handler
 const orderRoute = require("./routes/order.route");
-const {redisClient} = require("./utils/redis")
-const { ErrorHandler } = require("@tafvn/common");
+// const {redisClient} = require("./utils/redis")
+const { ErrorHandler, RedisManager } = require("@tafvn/common");
 
 // Initialize express app
 const app = express();
@@ -34,15 +33,21 @@ app.use(helmet());
 app.use(cors());
 
 // Parse URL-encoded and JSON request bodies
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 app.use(express.json({ limit: "10kb" }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 // Configure cookie sessions
 app.use(
-  cookieSession({
-    signed: false,
-    secure: process.env.NODE_ENV !== "development",
+  session({
+    store: RedisManager.getRedisStore(),
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV !== "development",
+      httpOnly: true,
+      maxAge: 1000 * 60 * 10,
+    }
   })
 );
 

@@ -1,14 +1,22 @@
 const redis = require("redis");
+const connectRedis = require("connect-redis");
 
 class RedisManager {
   constructor() {
     this.client = null;
+    this.redisStore = null;
   }
 
   async connect(config) {
     this.client = redis.createClient(config);
     this.client.on("error", (err) => console.error("Redis Client Error", err));
     await this.client.connect().then(() => console.log(`Connected to Redis!`));
+
+    // Initialize store after client is connected
+    this.redisStore = new connectRedis({
+      client: this.client,
+      prefix: "taf",
+    });
   }
 
   // Transaction handling
@@ -112,6 +120,10 @@ class RedisManager {
   // Close connection
   async quit() {
     await this.client.quit();
+  }
+
+  getRedisStore() {
+    return this.redisStore;
   }
 }
 
