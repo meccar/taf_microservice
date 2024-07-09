@@ -1,9 +1,11 @@
 // Import modules
 const https = require("https");
 const mongoose = require("mongoose");
+const session = require("express-session");
 
 const app = require("./index");
-const { natsWrapper } = require("@tafvn/common");
+const { natsWrapper, redisManager } = require("@tafvn/common");
+const { sessionOption, redisOption } = require("./utils/options")
 
 // Replace placeholder in MongoDB connection URL with actual password
 const url = process.env.MONGODB_URI.replace(
@@ -30,6 +32,10 @@ async function start() {
     // Gracefully close NATS connection on process termination signals
     process.on("SIGINT", () => natsWrapper.client.close());
     process.on("SIGTERM", () => natsWrapper.client.close());
+
+    // Configure cookie sessions
+    await redisManager.connect(redisOption);
+    app.use(session(sessionOption));
 
     // Connect to MongoDB
     await mongoose.connect(url).then(() => console.log("Connected to MongoDB"));
