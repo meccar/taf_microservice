@@ -2,10 +2,8 @@ const https = require("https");
 const mongoose = require("mongoose");
 const fs = require("fs");
 
-const { natsWrapper, RedisManager } = require("@tafvn/common");
+const { natsWrapper, redisManager } = require("@tafvn/common");
 const app = require("./index");
-
-const redisManager = new RedisManager();
 
 const url = process.env.MONGODB.replace(
   "<password>",
@@ -44,6 +42,7 @@ async function start() {
     process.on("SIGTERM", () => natsWrapper.client.close());
 
     await redisManager.connect(config);
+    
     await mongoose.connect(url).then(() => console.log("Connected to MongoDB"));
 
     https
