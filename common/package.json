@@ -1,6 +1,6 @@
 {
   "name": "@tafvn/common",
-  "version": "1.0.34",
+  "version": "1.0.36",
   "main": "./src/index.js",
   "types": "./src/index.js",
   "files": [
@@ -18,12 +18,16 @@
   },
   "dependencies": {
     "@types/node": "^20.14.8",
+    "connect-redis": "^7.1.1",
     "dotenv": "^16.4.5",
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
+    "minimist": "^1.2.8",
     "node-nats-streaming": "^0.3.2",
+    "optimist": "^0.5.2",
     "path": "^0.12.7",
     "pub": "^0.2.0",
+    "redis": "^4.6.15",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.5.2"
   },

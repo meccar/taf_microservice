@@ -1,5 +1,5 @@
 const redis = require("redis");
-const connectRedis = require("connect-redis");
+const RedisStore = require("connect-redis").default;
 
 class RedisManager {
   constructor() {
@@ -19,8 +19,9 @@ class RedisManager {
 
     return new Promise((resolve, reject) => {
       this.client.connect().then(() => {
-        console.log(`Connected to Redis!`)
-        this.redisStore = new connectRedis({
+        console.log(`Connected to Redis!`);
+
+        this.redisStore = new RedisStore({
           client: this.client,
           prefix: "taf",
         });
@@ -29,7 +30,7 @@ class RedisManager {
       this.client.on("error", (err) => {
         reject(err);
       });
-    })
+    });
   }
 
   // Transaction handling
@@ -143,5 +144,5 @@ class RedisManager {
   }
 }
 
-const redisManager = new RedisManager()
+const redisManager = new RedisManager();
 module.exports = { redisManager };
