@@ -35,10 +35,6 @@ async function start() {
 
     // Configure cookie sessions
 
-    console.log(process.env.REDIS_PW);
-    console.log(process.env.REDIS_HOST);
-    console.log(process.env.REDIS_PORT);
-
     await redisManager.connect(redisOption);
     app.use(session(sessionOption));
 
