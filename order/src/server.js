@@ -5,7 +5,7 @@ const session = require("express-session");
 
 const app = require("./index");
 const { natsWrapper, redisManager } = require("@tafvn/common");
-const { sessionOption, redisOption } = require("./utils/options")
+const { sessionOption, redisOption } = require("./utils/options");
 
 // Replace placeholder in MongoDB connection URL with actual password
 const url = process.env.MONGODB_URI.replace(
@@ -34,6 +34,11 @@ async function start() {
     process.on("SIGTERM", () => natsWrapper.client.close());
 
     // Configure cookie sessions
+
+    console.log(process.env.REDIS_PW);
+    console.log(process.env.REDIS_HOST);
+    console.log(process.env.REDIS_PORT);
+
     await redisManager.connect(redisOption);
     app.use(session(sessionOption));
 
@@ -50,7 +55,7 @@ async function start() {
         app
       )
       .listen(process.env.PORT, () => {
-        console.log(`Server is listening on ${process.env.PORT}`);
+        console.log(`Server is listening on ${process.env.POST_PORT}`);
       });
   } catch (err) {
     // Log any errors that occur during startup

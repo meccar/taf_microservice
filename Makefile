@@ -20,12 +20,14 @@ config-win:
 	@powershell -Command "& minikube -p docker-desktop docker-env | Invoke-Expression"
 
 run:
-	skaffold dev --auto-build --auto-sync --auto-deploy; \
-	EXIT_STATUS=$$?; \
-	if [ $$EXIT_STATUS -eq 0 ] || [ $$EXIT_STATUS -eq 130 ]; then \
-		echo "Cleaning Secrets..."; \
-		$(MAKE) clean; \
-	fi
+	skaffold dev --auto-build --auto-sync --auto-deploy
+
+
+# EXIT_STATUS=$$?; \
+# if [ $$EXIT_STATUS -eq 0 ] || [ $$EXIT_STATUS -eq 130 ]; then \
+# 	echo "Cleaning Secrets..."; \
+# 	$(MAKE) clean; \
+# fi
 
 # Generate the secret key
 secret-key: $(PRIVATE_KEY) $(PUBLIC_KEY)
