@@ -13,6 +13,7 @@ module.exports = {
   ...require("./utils/natsWrapper"),
   ...require("./utils/validation"),
   ...require("./utils/redis"),
+  ...require("./utils/options"),
 
   ...require("./dist/events/listener.event"),
   ...require("./dist/events/publisher.event"),
