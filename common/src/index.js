@@ -12,8 +12,9 @@ module.exports = {
   ...require("./utils/catchAsync"),
   ...require("./utils/natsWrapper"),
   ...require("./utils/validation"),
-  ...require("./utils/redis"),
   ...require("./utils/options"),
+
+  ...require("./redis/client"),
 
   ...require("./dist/events/listener.event"),
   ...require("./dist/events/publisher.event"),
