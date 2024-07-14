@@ -1,6 +1,6 @@
 {
   "name": "@tafvn/common",
-  "version": "1.0.37",
+  "version": "1.0.38",
   "main": "./src/index.js",
   "types": "./src/index.js",
   "files": [
