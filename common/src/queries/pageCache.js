@@ -1,5 +1,5 @@
 const client = require("$service/redis");
-const pageCacheKey = require("../keys");
+const { pageCacheKey } = require("../keys");
 // const cacheRoutes = [];
 
 const getCachedPage = (cacheRoutes, route) => {
