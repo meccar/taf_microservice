@@ -2,11 +2,12 @@ const { userKey } = require("../keys.js");
 const genID = require("../utils/genID.js");
 const serialize = require("./items/serialize.js");
 const deserialize = require("./items/deserialize.js");
+const { redisManager } = require("../redis/client");
 
 const getUserByUsername = async (username) => {};
 
 const getUserById = async (id) => {
-  const user = await client.hGetAll(userKey(id));
+  const user = await redisManager.client.hGetAll(userKey(id));
 
   return deserialize(id, user);
 };
@@ -15,7 +16,7 @@ const getUserById = async (id) => {
 const createUser = async (data) => {
   const id = genID();
 
-  await client.hSet(userKey(id), serialize(data));
+  await redisManager.client.hSet(userKey(id), serialize(data));
 
   return id;
 };
