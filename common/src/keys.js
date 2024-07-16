@@ -4,4 +4,6 @@ const userKey = (userID) => `user#${userID}`;
 
 const sessionKey = (sessionID) => `session#${sessionID}`;
 
-module.exports = { pageCacheKey, userKey, sessionKey };
+const itemKey = (itemID) => `item#${itemID}`;
+
+module.exports = { pageCacheKey, userKey, sessionKey, itemKey };
