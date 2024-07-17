@@ -1,4 +1,4 @@
-const { userKey } = require("../keys.js");
+const { userKey, usernamesUniqueKey } = require("../keys.js");
 const genID = require("../utils/genID.js");
 const serialize = require("./items/serialize.js");
 const deserialize = require("./items/deserialize.js");
@@ -16,7 +16,18 @@ const getUserById = async (id) => {
 const createUser = async (data) => {
   const id = genID();
 
+  // check if username already existed
+  const exists = await redisManager.client.sIsMember(
+    usernamesUniqueKey(),
+    data.username
+  );
+
+  if (exists) {
+    throw new Error("Username is taken");
+  }
+
   await redisManager.client.hSet(userKey(id), serialize(data));
+  await redisManager.client.sAdd(usernamesUniqueKey(), data.username);
 
   return id;
 };
