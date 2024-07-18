@@ -25,12 +25,25 @@ class RedisManager {
           client: this.client,
           prefix: "taf",
         });
+
+        this.getAsync = promisify(this._client.get).bind(this._client);
+        this.setAsync = promisify(this._client.set).bind(this._client);
+
         resolve();
       });
       this.client.on("error", (err) => {
         reject(err);
       });
     });
+  }
+
+  async get(key) {
+    return this.getAsync(key);
+  }
+
+  async set(key, value, minTTL = 3600, maxTTL = 7200) {
+    const ttl = Math.floor(Math.random() * (maxTTL - minTTL + 1) + minTTL);
+    return this.setAsync(key, value, 'EX', ttl);
   }
 
   // Transaction handling
