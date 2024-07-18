@@ -6,6 +6,7 @@ module.exports = {
 
   ...require("./middlewares/auth.middleware"),
   ...require("./middlewares/verify.middleware"),
+  ...require("./middlewares/checkCache.middleware"),
 
   ...require("./utils/apiFeatures"),
   ...require("./utils/appError"),
