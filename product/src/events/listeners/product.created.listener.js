@@ -9,18 +9,19 @@
 //     onMessage(data: ProductCreatedEvent["data"], msg: Message) {}
 // }
 
-const { Message } = require("node-nats-streaming");
-const { Subjects, Listener, ProductCreatedEvent } = require("@tafvn/common");
-const Product = require("../../models/product.model");
+// const { Message } = require("node-nats-streaming");
+const { Subjects, Listener } = require("@tafvn/common");
+// const Product = require("../../models/product.model");
 
 class ProductCreatedListener extends Listener {
   subject = Subjects.ProductCreated;
 
   queueGroupName = "product-service";
 
-  onMessage(data, msg) {
-    // Handle the message
-  }
+  // eslint-disable-next-line class-methods-use-this
+  // onMessage(data, msg) {
+  // Handle the message
+  // }
 }
 
 module.exports = ProductCreatedListener;

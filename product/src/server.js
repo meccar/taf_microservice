@@ -7,7 +7,6 @@ const { natsWrapper, redisManager } = require("@tafvn/common");
 // const { sessionOption, redisOption } = require("./utils/options");
 const { sessionOption, redisOption } = require("@tafvn/common");
 
-
 const url = process.env.MONGODB.replace(
   "<password>",
   process.env.MONGODB_PASSWORD

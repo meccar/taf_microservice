@@ -41,7 +41,7 @@ build:
         manual:
           - src: "**/*.js"
             dest: .
-    # - image: us.gcr.io/taf-dev-425515/client
+    # - image: us.gcr.io/taf-dev-425515/order
     - image: meccar/order
       context: order
       docker:

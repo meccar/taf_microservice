@@ -17,21 +17,21 @@ spec:
               service:
                 name: auth-clusterip-srv
                 port:
-                  number: 8001
+                  number: 3000
           - path: /api/v1/product/?(.*)
             pathType: Prefix
             backend:
               service:
                 name: product-clusterip-srv
                 port:
-                  number: 8003
+                  number: 3000
           - path: /api/v1/order/?(.*)
             pathType: Prefix
             backend:
               service:
                 name: order-clusterip-srv
                 port:
-                  number: 8004
+                  number: 3000
           - path: /?(.*)
             pathType: Prefix
             backend:
