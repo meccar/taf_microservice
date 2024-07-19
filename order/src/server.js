@@ -14,6 +14,7 @@ const url = process.env.MONGODB_URI.replace(
   process.env.MONGODB_PASSWORD
 );
 
+console.log(redisOption);
 // Define async function to start the application
 async function start() {
   try {

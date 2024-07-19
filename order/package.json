@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tafvn/common": "^1.0.36",
+    "@tafvn/common": "^1.0.41",
     "body-parser": "^1.20.2",
     "cookie-session": "^2.1.0",
     "cors": "^2.8.5",

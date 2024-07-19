@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order
+  template:
+    metadata:
+      labels:
+        app: order
+    spec:
+      containers:
+        - name: order
+          image: meccar/order
+          env:
+            - name: POST_PORT
+              value: "8004"
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: REDIS_HOST
+              value: "localhost"
+            - name: REDIS_PORT
+              value: "6379"
+            - name: REDIS_PW
+              valueFrom:
+                secretKeyRef:
+                  name: redis-secret
+                  key: order-redis-password
+            - name: NATS_URL
+              value: "http://nats-srv:4222"
+            - name: NATS_CLUSTER_ID
+              value: "taf"
+            - name: NODE_ENV
+              value: "development"
+            - name: MONGODB_URI
+              value: "mongodb+srv://tafOrder:<password>@taforder.gtrgnau.mongodb.net/?retryWrites=true&w=majority&appName=tafOrder"
+            - name: MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: order-mongodb-secret
+                  key: order-mongodb-password
+            - name: SECR_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: secr-key
+            - name: PUB_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-pub
+                  key: pub-key
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: order-mongodb-secret
+type: Opaque
+data:
+  order-mongodb-password: ZldJTkQwanZMSUlsMkJjOQ==
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: redis-secret
+type: Opaque
+data:
+  order-redis-password:
+  # WW9UTUNPOTdJZUJKem9xbEZIcmd3eHVLTVg3R2tBRkc=
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-clusterip-srv
+spec:
+  selector:
+    app: order
+  type: ClusterIP
+  ports:
+    - name: order
+      protocol: TCP
+      port: 8004
+      targetPort: 8004
