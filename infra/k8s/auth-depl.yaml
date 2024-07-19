@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: meccar/auth
+          # image: us.gcr.io/taf-dev-425515/auth:latest
+          # envFrom:
+          #   configMapRef:
+          #     name: auth-config
+          #   secretKeyRef:
+          #     name: auth-secrets
+          env:
+            - name: NODE_ENV
+              value: "development"
+            - name: MONGODB_URI
+              value: "mongodb+srv://taf-Auth:<password>@tafauth.suqvaxr.mongodb.net/?retryWrites=true&w=majority&appName=tafAuth"
+            - name: MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: auth-mongodb-secret
+                  key: auth-mongodb-password
+            - name: SECR_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: secr-key
+            - name: PUB_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-pub
+                  key: pub-key
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: auth-mongodb-secret
+type: Opaque
+data:
+  auth-mongodb-password: VGhyZ2d1SGV5azBVR2JRTg==
+# ---
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: jwt-secret
+# type: Opaque
+# data:
+#   secr-key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2d0lCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktrd2dnU2xBZ0VBQW9JQkFRREhIbGFVWGhTZEg1L24KRjJuUTVMRkdNNjlrcHBTNTYzTVVRbU05ekxPU1NTdFFTYTM2UWI1RG1VdjgrQnpHWUFoeUowNHFXalpPZ3pCdQp6WjZPZFBnWk1IMnRPN0FaRzBIbmNFN0sxbUFVL2xEdVRSVTIyM2FJQlRvSDkya3JMdEwrZC9UNEJsVkhTcHpQCjJoZmVRVjBMNGQxOFZFVTJwUXgybm9EQjJnMzNjVTJWa09iQ0RGWUtrN1BTM0xqQzV1VzZKZUViK1lxckU3THkKM0ZReEtOdGxuaXBFTXRXdW5EeFpqNmxWR2tjNWcyc2VKaktWWjZWVzdiQWVreXNRK1hMcWZlSmszaGg3THRSYwpMeFRvcC9DU2NIN3dMbFVnOU4wWDNOeXNWSWhXWml4QjZ3NHhiWE1jSXFQbFd0NkZNR3B3NXlpcjdaUVVOZmVuCitHNUVLRjZCQWdNQkFBRUNnZ0VBWk5KWHhJaGVwN0I3cHVlVURORy9jV3g2UXR5V01nMm1GM3dHQkNUQ1NEQUUKWG9Md05PZFZENlZ2ZElldENrVldBWGNsZlF4d3N4QjZWYUNIeUZveHhZOW9FMjlGbTNEUnpmNXY1d1RsWWJ2agovc1hKR0IzSHh0ZmVxbW44Tm9GZkZMcG9yNjJGUUxQbTh0ZmJmZzVhcnNtTy9JVXZCcHhMMDBRdXJmbGJXUTZCCkxCTWlHMm9sa09FMFZ0Q2pHOUIxNFhqOWZGK0FmWURQUjdpY25wNTJveHlhRmN3SGNrTlQ4OUZnNm5tNkc5Vy8KVzhpRGIvd1RJY0dFZURETk4yRllFSklQdGZyelFJRTVDU2RTcVJlRHY4a0RFRmR0VE14ZUFuUnhLY09nSnZmeApkb3RPY1FVK25IOVM4UWZrNXI5ZXBHUVY1NTYxSHJsSWxHQjJqdHJvZ1FLQmdRRG1Bd2drNVVuaXV6QzdWU1FaCmlDdmJSNW15eDlLRjE5bHArWXZ4UlZTUDYyZ05ENWJxU3ZiSmdEdFZ3NElCRUNVTWFFczJqMWo4OThZSWF2UUgKZDl0M29DeWk0WHM4N00vQ21Dd0JZeGcxbGVBVzRSQlZieXRJT0lrOUU2NGN2YlJaSzA4YlVTMU1NbkNpWVd6bwpwVWxjU1RnVEpLUHpxRldlN3ltZVNjRTlJd0tCZ1FEZG5idS94bkoxVXNwZUE3c2pOT2JZc0dWdVdWd2VoYk9rCi9UUDJuVjBrTnFzbWNjamV6Ky8wUm1jczE3Ny9KUXl4eE5wL0t0Z1RoendZMEpaMUFESGJ6TlRUVXVzT2NoSVkKMkVDVUF5TkIxNjYvdjJ3RzBpejhNZUpvVCtrK2xjc1FNd1lRQ05Ua1B1RkkrdlZ4c0RsM2lhc3RvWXNTUHhVZQptbCtqYkpFcUN3S0JnUUNYNldDem5Zd1M1emJrUXZNNHVhcmRoSWlLZjFjWGR0dnRGaGZMSGRNZnlvWktPZ1dlCmNDeFdJUThQTWJUbkp0YVJQMENOcEZkTm5BZDYvOGgwTmtFSTNRMGQ5bllDWXhWRW5HUlQ5akxERVYyVFBzb2UKNHZGZkhaZm1jdDBIdG5NcWdXUVowcDlzTjlRVUt1eFhLdk1zdEY4SXBhWnpBcmFwNWFOREc4czRxUUtCZ1FDRApOc2dhSlJKUjJ1SU14aUxBRnF0enN3VnJUNmRXUHcxOWE1bWZzODZaQ1hGT2d1Sk80a2tObGIyeTlFNlczTVhtClgwcUxMci9lMkJ4Q0NRWjhZZEFqZHVTdjlwRkw3VWcvdzVLQTBGYkl2ajR1TTlWdk9IUUFJajBPUy9vcTN4L3IKQ0hyWGRaTXZUUGV3Y1Q1dndNcFZ0NEpOc3k4WGI1ZytsV0o0N1dnSnZ3S0JnUUM0TC9tZkNYLy9VcnFOSjNvNwpYRG16QnB0Y1BsU0NnTmhxM1ZWUzc1QVNMMThyUU9jMnJWTTU3SDN6ZElmN3FZOUx1MjBuaEk5YzNFZ0QyNFVlCmtadGtWdlRhL2kwdTZTa3hEZXB2MzlNdVhnbUV4L21sV0VJb1JLc1VxTXE4UDNnVm9MS3FlWCtRaXkrSUNVT1AKWnhGMENLRnA3Y1NBOVR4TC9IL0NDM2NtY0E9PQotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0t
+# ---
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: jwt-pub
+# type: Opaque
+# data:
+#   pub-key: LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUF4eDVXbEY0VW5SK2Y1eGRwME9TeApSak92WkthVXVldHpGRUpqUGN5emtra3JVRW10K2tHK1E1bEwvUGdjeG1BSWNpZE9LbG8yVG9Nd2JzMmVqblQ0CkdUQjlyVHV3R1J0QjUzQk95dFpnRlA1UTdrMFZOdHQyaUFVNkIvZHBLeTdTL25mMCtBWlZSMHFjejlvWDNrRmQKQytIZGZGUkZOcVVNZHA2QXdkb045M0ZObFpEbXdneFdDcE96MHR5NHd1Ymx1aVhoRy9tS3F4T3k4dHhVTVNqYgpaWjRxUkRMVnJwdzhXWStwVlJwSE9ZTnJIaVl5bFdlbFZ1MndIcE1yRVBseTZuM2laTjRZZXk3VVhDOFU2S2Z3CmtuQis4QzVWSVBUZEY5emNyRlNJVm1Zc1Flc09NVzF6SENLajVWcmVoVEJxY09jb3ErMlVGRFgzcC9odVJDaGUKZ1FJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0t
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-clusterip-srv
+spec:
+  selector:
+    app: auth
+  type: ClusterIP
+  ports:
+    - name: auth
+      protocol: TCP
+      port: 8001
+      targetPort: 8001
