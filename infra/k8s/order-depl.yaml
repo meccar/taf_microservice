@@ -70,7 +70,7 @@ metadata:
 type: Opaque
 data:
   order-redis-password:
-# WW9UTUNPOTdJZUJKem9xbEZIcmd3eHVLTVg3R2tBRkc=
+  # WW9UTUNPOTdJZUJKem9xbEZIcmd3eHVLTVg3R2tBRkc=
 ---
 apiVersion: v1
 kind: Service

@@ -25,8 +25,7 @@ const url = process.env.MONGODB.replace(
 //   },
 // };
 
-/* eslint-disable no-console */
-/* eslint-disable no-process-exit */
+console.log(redisOption);
 async function start() {
   try {
     await natsWrapper.connect(
