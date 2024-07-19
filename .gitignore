@@ -1,7 +1,7 @@
 # Ignore infra directory
 .infra/
-.ps1
-.txt
+*.ps1
+*.txt
 
 # Logs
 logs
