@@ -62,8 +62,8 @@ class RedisManager {
   }
 
   // Pub/Sub
-  subscribe(channel, callback) {
-    this._client.subscribe(channel, (message) => {
+  async subscribe(channel, callback) {
+    return await this._client.subscribe(channel, (message) => {
       callback(message);
     });
   }
@@ -85,9 +85,10 @@ class RedisManager {
   }
 
   // Caching
-  async cacheWithExpiry(key, value, expiryInSeconds) {
+  async cacheWithExpiry(key, value, minTTL = 3600, maxTTL = 7200) {
+    const ttl = Math.floor(Math.random() * (maxTTL - minTTL + 1) + minTTL);
     return await this._client.set(key, value, {
-      EX: expiryInSeconds,
+      EX: ttl,
     });
   }
 

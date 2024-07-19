@@ -1,6 +1,10 @@
 {
   "name": "@tafvn/common",
+<<<<<<< HEAD
   "version": "1.0.39",
+=======
+  "version": "1.0.37",
+>>>>>>> 239698b (updated common)
   "main": "./src/index.js",
   "types": "./src/index.js",
   "files": [
