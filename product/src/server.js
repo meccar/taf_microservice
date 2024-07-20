@@ -3,9 +3,12 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 
 const app = require("./index");
-const { natsWrapper, redisManager } = require("@tafvn/common");
-// const { sessionOption, redisOption } = require("./utils/options");
-const { sessionOption, redisOption } = require("@tafvn/common");
+const {
+  natsWrapper,
+  redisManager,
+  sessionOption,
+  redisOption,
+} = require("@tafvn/common");
 
 const url = process.env.MONGODB.replace(
   "<password>",
