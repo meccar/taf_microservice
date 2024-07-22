@@ -13,4 +13,4 @@ const OrderStatus = {
   Complete: "complete",
 };
 
-module.exports = { OrderStatus };
+module.exports = OrderStatus;
