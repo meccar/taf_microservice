@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 const { catchAsync } = require("../utils/catchAsync");
-const AppError = require("../utils/appError");
+const { AppError } = require("../utils/appError");
 
 const VerifyToken = catchAsync(async (req, res, next) => {
   let token;
@@ -19,7 +19,7 @@ const VerifyToken = catchAsync(async (req, res, next) => {
 
   if (!token) {
     return next(
-      new AppError("You are not logged in! Please log in to get access", 401),
+      new AppError("You are not logged in! Please log in to get access", 401)
     );
   }
 
@@ -28,7 +28,7 @@ const VerifyToken = catchAsync(async (req, res, next) => {
 
   if (!currentUser) {
     return next(
-      new AppError("The user belonging to this token no longer exists", 401),
+      new AppError("The user belonging to this token no longer exists", 401)
     );
   }
 
