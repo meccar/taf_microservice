@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const OrderStatus = require("@tafvn/common");
 // const ProductCreatedPublisher = require("../events/publishers/product-created-publisher");
 // const ProductUpdatedPublisher = require("../events/publishers/product.updated.publisher");
 // const natsWrapper = require("../nats-wrapper");
@@ -12,8 +12,8 @@ const OrderSchema = new mongoose.Schema({
   status: {
     type: String,
     required: true,
-    // enum: Object.values(OrderStatus),
-    // default: OrderStatus.Created,
+    enum: Object.values(OrderStatus),
+    default: OrderStatus.Created,
   },
   product: {
     type: mongoose.Schema.Types.ObjectId,
@@ -26,6 +26,20 @@ const OrderSchema = new mongoose.Schema({
   expiresAt: {
     type: mongoose.Schema.Types.Date,
   },
+});
+
+OrderSchema.methods.isReserved = catchAsync(async (req, res, next) => {
+  const existingOrder = await Order.FindOne({
+    product: this,
+    status: {
+      $in: [
+        OrderStatus.Created,
+        OrderStatus.AwaitingPayment,
+        OrderStatus.Complete,
+      ],
+    },
+  });
+  next();
 });
 
 // ProductSchema.pre(/^find/, function (next) {
