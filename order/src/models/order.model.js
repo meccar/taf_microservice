@@ -1,8 +1,5 @@
 const mongoose = require("mongoose");
 const OrderStatus = require("@tafvn/common");
-// const ProductCreatedPublisher = require("../events/publishers/product-created-publisher");
-// const ProductUpdatedPublisher = require("../events/publishers/product.updated.publisher");
-// const natsWrapper = require("../nats-wrapper");
 
 const OrderSchema = new mongoose.Schema({
   userId: {
@@ -28,7 +25,7 @@ const OrderSchema = new mongoose.Schema({
   },
 });
 
-OrderSchema.methods.isReserved = catchAsync(async (req, res, next) => {
+OrderSchema.methods.isReserved = async (req, res, next) => {
   const existingOrder = await Order.FindOne({
     product: this,
     status: {
@@ -39,8 +36,9 @@ OrderSchema.methods.isReserved = catchAsync(async (req, res, next) => {
       ],
     },
   });
-  next();
-});
+
+  return !!existingOrder;
+};
 
 // ProductSchema.pre(/^find/, function (next) {
 //   this.populate("user").populate({
@@ -71,4 +69,4 @@ OrderSchema.methods.isReserved = catchAsync(async (req, res, next) => {
 // });
 
 const Order = mongoose.model("orders", OrderSchema);
-module.exports = Order;
+module.exports = { Order, OrderStatus };

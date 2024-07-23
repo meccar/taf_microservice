@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const ProductCreatedPublisher = require("../events/publishers/product.created.publisher");
 const ProductUpdatedPublisher = require("../events/publishers/product.updated.publisher");
-const natsWrapper = require("../nats-wrapper");
+const { natsWrapper } = require("@tafvn/common");
 
 const {
   Types: { ObjectId },
