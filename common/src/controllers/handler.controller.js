@@ -1,6 +1,7 @@
 const { catchAsync } = require("../utils/catchAsync");
 const { AppError } = require("../utils/appError");
 const APIFeatures = require("../utils/apiFeatures");
+const OrderStatus = require("../events/types/order.status");
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
@@ -25,6 +26,10 @@ exports.updateOne = (Model) =>
 
     if (!doc) {
       return next(new AppError("No document found with that ID", 404));
+    }
+
+    if (Model === "Order") {
+      doc.status = OrderStatus.Cancelled;
     }
 
     return res.status(200).json({
@@ -72,9 +77,11 @@ exports.getOne = (Model, populateOptions) =>
 
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
-    // let filter = {};
-    // if (req.params.postID) filter = { post : req.params.postID }
-    // if (req.params.communityID) filter = { community: req.params.communityID };
+    let filter = {};
+
+    if (req.params.postID) filter = { post: req.params.postID };
+    else if (req.params.productID) filter = { product: req.params.productID };
+    else if (req.params.orderID) filter = { order: req.params.orderID };
 
     const features = new APIFeatures(Model.find(req.filter), req.query)
       .filter()
